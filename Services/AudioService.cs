@@ -110,7 +110,7 @@ namespace MusicPlayer.Services
         private void CommonPlay(bool isSetCurrentTime = false)
         {
             // ToDo: 有些歌即使指定了位置但还是从头开始播放
-            
+
             var song = PlayListHelp.GetCurrentSong();
             if (song == null) return;
 
@@ -152,20 +152,15 @@ namespace MusicPlayer.Services
             var song = PlayListHelp.GetCurrentSong();
             if (song != null)
             {
+                var diff = Math.Abs(song.Position.TotalMilliseconds - song.Duration.TotalMilliseconds);
                 if (outputDevice?.PlaybackState == PlaybackState.Playing)
                 {
                     song.Position = GetPosition();
                 }
-                else
+                else if (outputDevice?.PlaybackState == PlaybackState.Stopped && diff < 1000)
                 {
-                    if (outputDevice?.PlaybackState == PlaybackState.Stopped)
-                    {
-                        if (Math.Abs(song.Position.TotalMilliseconds - song.Duration.TotalMilliseconds) < 1000)
-                        {
-                            song.Position = TimeSpan.Zero;
-                            AutoPlayNext(); // 自动播放下一首
-                        }
-                    }
+                    song.Position = TimeSpan.Zero;
+                    AutoPlayNext(); // 自动播放下一首
                 }
             }
             OnSongInfoChanged?.Invoke(song);
