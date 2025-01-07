@@ -42,40 +42,39 @@
         </ProgressBar>
 
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Orientation="Horizontal">
-                <StackPanel.Resources>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="Margin" Value="4,2,8,0" />
-                    </Style>
-                </StackPanel.Resources>
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*" />
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="0.75*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
                 <StackPanel>
                     <TextBlock FontWeight="Bold" Text="#" />
                     <TextBlock VerticalAlignment="Center" Text="{Binding CurrentSong.Id}" />
                 </StackPanel>
 
-                <StackPanel Width="100">
-                    <TextBlock Margin="0,0,0,2" Text="{Binding CurrentSong.Title}" />
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="{Binding CurrentSong.Title}" />
                     <TextBlock Text="{Binding CurrentSong.Artist}" />
                 </StackPanel>
-                <StackPanel>
-                    <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
+
+                <StackPanel Grid.Column="2">
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding CurrentSong.Position, Converter={convs:TimeSpanToStringConverter}}" />
                         <TextBlock Text="/" />
                         <TextBlock Text="{Binding CurrentSong.Duration, Converter={convs:TimeSpanToStringConverter}}" />
                     </StackPanel>
 
-                    <StackPanel Margin="0" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding CurrentSong.Position, Converter={convs:TimeSpanToIntConverter}}" />
                         <TextBlock Text="/" />
                         <TextBlock Text="{Binding CurrentSong.Duration, Converter={convs:TimeSpanToIntConverter}}" />
@@ -83,10 +82,10 @@
                 </StackPanel>
 
                 <TextBlock
-                    Margin="0,0,0,2"
+                    Grid.Column="3"
                     VerticalAlignment="Bottom"
                     Text="{Binding CurrentSong.Origin}" />
-            </StackPanel>
+            </Grid>
 
             <StackPanel
                 Grid.Column="1"
@@ -121,6 +120,7 @@
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <md:PopupBox
+                    Margin="0,0,4,0"
                     md:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
                     PlacementMode="TopAndAlignCentres"
                     ToggleContent="{md:PackIcon Kind=VolumeHigh,
@@ -128,22 +128,21 @@
                     ToolTip="音量">
                     <StackPanel>
                         <Slider
-                            Height="100"
-                            Maximum="101"
-                            Minimum="-1"
+                            Height="80"
+                            Margin="20,4"
+                            Maximum="100"
+                            Minimum="0"
                             Orientation="Vertical"
                             Value="{Binding VolumeInt}" />
-
                         <TextBlock HorizontalAlignment="Center" Text="{Binding VolumeInt}" />
                     </StackPanel>
-
-
                 </md:PopupBox>
 
                 <Button
                     md:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
                     Content="{md:PackIcon Kind=MenuOpen,
                                           Size=20}"
+                    Command="{Binding TogglePlayListCommand}"
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
                     Style="{StaticResource MaterialDesignIconButton}"
                     ToolTip="播放列表" />

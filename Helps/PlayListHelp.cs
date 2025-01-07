@@ -7,7 +7,7 @@ namespace MusicPlayer.Helps
     {
         public static PlayList? _playList;
 
-        public static void SetPlayList(PlayList? playList)
+        public static void SetPlayList(PlayList playList)
         {
             _playList = playList;
         }
@@ -17,23 +17,31 @@ namespace MusicPlayer.Helps
             _playList?.Songs?.Add(song);
         }
 
-        public static void SetCurrentIdxPrev()
+        public static void DeleteSong(int id)
         {
-            var count = _playList?.Songs?.Count ?? 0;
-            if (count > 0)
+            var songToRemove = _playList?.Songs?.FirstOrDefault(s => s.Id == id);
+            if (songToRemove != null)
             {
-                var currentIdx = _playList!.CurrentIdx;
-                _playList!.CurrentIdx = (currentIdx - 1 + count) % count;
+                _playList!.Songs!.Remove(songToRemove);
             }
         }
 
-        public static void SetCurrentIdxNext()
+        public static void SetCurrentIdx(int? id = null, bool isPrev = false, bool isNext = false)
         {
+            if (id != null)
+            {
+                _playList!.CurrentIdx = id.Value;
+                return;
+            }
+
             var count = _playList?.Songs?.Count ?? 0;
             if (count > 0)
             {
                 var currentIdx = _playList!.CurrentIdx;
-                _playList!.CurrentIdx = (currentIdx + 1) % count;
+                if (isPrev)
+                    _playList.CurrentIdx = (currentIdx - 1 + count) % count;
+                else if (isNext)
+                    _playList.CurrentIdx = (currentIdx + 1) % count;
             }
         }
 
@@ -43,12 +51,7 @@ namespace MusicPlayer.Helps
             switch (mode)
             {
                 case PlayModeEnum.Loop:
-                    var count = _playList?.Songs?.Count ?? 0;
-                    if (count > 0)
-                    {
-                        var currentIdx = _playList!.CurrentIdx;
-                        _playList!.CurrentIdx = (currentIdx + 1) % count;
-                    }
+                    SetCurrentIdx(isNext: true);
                     break;
                 case PlayModeEnum.Random:
                     // ToDo
@@ -58,15 +61,28 @@ namespace MusicPlayer.Helps
             }
         }
 
-        public static void SetPosition(TimeSpan position)
+        public static void SetCurrentSongPosition(TimeSpan position)
         {
             var song = GetCurrentSong();
             if (song != null)
+            {
                 song.Position = position;
+            }
         }
+
 
         public static PlayList? GetPlayList() => _playList;
 
-        public static Song? GetCurrentSong() => _playList?.Songs?[_playList.CurrentIdx];
+        public static Song? GetCurrentSong()
+        {
+            var song = _playList?.Songs?.FirstOrDefault(s => s.Id == _playList!.CurrentIdx);
+            return song;
+        }
+
+        public static void ClearPlayList()
+        {
+            _playList!.CurrentIdx = -1;
+            _playList?.Songs?.Clear();
+        }
     }
 }

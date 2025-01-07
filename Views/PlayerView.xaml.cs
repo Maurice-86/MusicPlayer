@@ -49,7 +49,7 @@ namespace MusicPlayer.Views
             if (song == null) return;
 
             song.IsDragging = false;
-            viewModel.SetPosition();
+            viewModel.SetAudioFileCurrentTime();
         }
 
         // 更新进度条值

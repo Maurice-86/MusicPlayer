@@ -50,9 +50,6 @@ namespace MusicPlayer.ViewModels
         }
 
         [ObservableProperty]
-        private int selectedIndex;
-
-        [ObservableProperty]
         private Song? selectedItem;
 
         // 定义事件，供 PlayerViewModel 订阅
@@ -68,8 +65,8 @@ namespace MusicPlayer.ViewModels
                 case RowDoubleClickedModeEnum.ReplaceCurrentPlayList:
                     PlayListHelp.SetPlayList(new PlayList
                     {
-                        CurrentIdx = SelectedIndex,
-                        Songs = Songs
+                        CurrentIdx = SelectedItem.Id,
+                        Songs = [.. Songs]
                     });
                     break;
                 case RowDoubleClickedModeEnum.AddToPlayList:

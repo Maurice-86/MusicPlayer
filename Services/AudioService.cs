@@ -1,5 +1,6 @@
 ﻿using MusicPlayer.Helps;
 using MusicPlayer.Models;
+using NAudio.Gui;
 using NAudio.Wave;
 using System.IO;
 
@@ -11,41 +12,47 @@ namespace MusicPlayer.Services
         private WaveOutEvent? outputDevice;
 
         private Timer? timer;
-        public event Action<Song>? OnSongInfoChanged;
+        public event Action<Song?>? OnSongInfoChanged;
         public event Action<PlaybackState>? OnPlayStateChanged;
 
         public void Play()
         {
-            if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Paused)
+            var song = PlayListHelp.GetCurrentSong();
+            if (song == null) return;
+
+            if (outputDevice?.PlaybackState == PlaybackState.Paused)
             {
-                OnPlayStateChanged?.Invoke(PlaybackState.Playing);
+
+                // 重新启动计时器
+                timer?.Change(0, 500); // 从现在开始，每500毫秒触发一次
                 outputDevice.Play();
+                OnPlayStateChanged?.Invoke(PlaybackState.Playing);
                 return;
             }
 
-            CommonPlay();
+            CommonPlay(isSetCurrentTime: true);
         }
 
         public void PlayPrev()
         {
-            var song = PlayListHelp.GetCurrentSong();
-
-            PlayListHelp.SetCurrentIdxPrev();
+            // SetCurrentSongPosition: Music Free 的逻辑
+            PlayListHelp.SetCurrentSongPosition(TimeSpan.Zero);
+            PlayListHelp.SetCurrentIdx(isPrev: true);
             CommonPlay();
-
-            if (song != null)
-                song.Position = TimeSpan.Zero;
         }
 
         public void PlayNext()
         {
-            var song = PlayListHelp.GetCurrentSong();
-
-            PlayListHelp.SetCurrentIdxNext();
+            PlayListHelp.SetCurrentSongPosition(TimeSpan.Zero);
+            PlayListHelp.SetCurrentIdx(isNext: true);
             CommonPlay();
+        }
 
-            if (song != null)
-                song.Position = TimeSpan.Zero;
+        public void PlayById(int id)
+        {
+            PlayListHelp.SetCurrentSongPosition(TimeSpan.Zero);
+            PlayListHelp.SetCurrentIdx(id: id);
+            CommonPlay();
         }
 
         public void AutoPlayNext()
@@ -56,36 +63,32 @@ namespace MusicPlayer.Services
 
         public void Pause()
         {
+            // 停止计时器
+            timer?.Change(Timeout.Infinite, 0);
             outputDevice?.Pause();  // 暂停音乐
             OnPlayStateChanged?.Invoke(PlaybackState.Paused);
         }
 
         public void Stop()
         {
+            // 停止计时器
+            timer?.Change(Timeout.Infinite, 0);
             outputDevice?.Stop();    // 停止音乐 
             OnPlayStateChanged?.Invoke(PlaybackState.Stopped);
         }
 
-        public void SetPositionAndPlay(TimeSpan position)
+        public void SetAudioFileCurrentTime(TimeSpan timeSpan)
         {
-            var playList = PlayListHelp.GetPlayList();
-            if (playList == null) return;
+            var song = PlayListHelp.GetCurrentSong();
+            if (song == null) return;
 
-            PlayListHelp.SetPosition(position);
+            song.Position = timeSpan;
+            PlayListHelp.SetCurrentSongPosition(timeSpan);
 
-            if (outputDevice?.PlaybackState == PlaybackState.Playing)
+            if (audioFile != null)
             {
-                Pause();
-
-                var song = PlayListHelp.GetCurrentSong();
-                if (song == null) return;
-
                 // 设置播放位置
                 audioFile!.CurrentTime = song.Position;
-
-                outputDevice.Play();    // 异步执行    
-
-                OnPlayStateChanged?.Invoke(PlaybackState.Playing);
             }
         }
 
@@ -104,21 +107,23 @@ namespace MusicPlayer.Services
         /// <summary>
         /// paly palynext palyprev autoplaynext 公共的部分
         /// </summary>
-        private void CommonPlay()
+        private void CommonPlay(bool isSetCurrentTime = false)
         {
-            var playList = PlayListHelp.GetPlayList();
-            if (playList == null) return;
-
+            // ToDo: 有些歌即使指定了位置但还是从头开始播放
+            
             var song = PlayListHelp.GetCurrentSong();
-            if (song == null || !File.Exists(song.Path)) return;
+            if (song == null) return;
 
-            Stop();
+            Stop();     // Pause 或不处理会触发 outputDevice Init 异常
 
             audioFile?.Close();
             audioFile = new AudioFileReader(song.Path);
 
-            // 设置播放位置
-            audioFile.CurrentTime = song.Position;
+            if (isSetCurrentTime)
+            {
+                // 设置播放位置
+                audioFile.CurrentTime = song.Position;
+            }
 
             if (outputDevice == null)
             {
@@ -139,27 +144,28 @@ namespace MusicPlayer.Services
             }
 
             outputDevice.Play();    // 异步执行    
-
             OnPlayStateChanged?.Invoke(PlaybackState.Playing);
         }
 
         private void UpdateSongInfo(object? state)
         {
             var song = PlayListHelp.GetCurrentSong();
-            if (song == null) return;
-
-            if (outputDevice?.PlaybackState == PlaybackState.Playing)
+            if (song != null)
             {
-                song.Position = GetPosition();
-            }
-            else
-            {
-                if (outputDevice?.PlaybackState == PlaybackState.Stopped)
+                if (outputDevice?.PlaybackState == PlaybackState.Playing)
                 {
-                    // 停止计时器
-                    timer?.Change(Timeout.Infinite, 0);
-                    song.Position = TimeSpan.Zero;
-                    AutoPlayNext(); // 自动播放下一首
+                    song.Position = GetPosition();
+                }
+                else
+                {
+                    if (outputDevice?.PlaybackState == PlaybackState.Stopped)
+                    {
+                        if (Math.Abs(song.Position.TotalMilliseconds - song.Duration.TotalMilliseconds) < 1000)
+                        {
+                            song.Position = TimeSpan.Zero;
+                            AutoPlayNext(); // 自动播放下一首
+                        }
+                    }
                 }
             }
             OnSongInfoChanged?.Invoke(song);

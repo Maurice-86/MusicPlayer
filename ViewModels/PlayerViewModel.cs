@@ -23,7 +23,7 @@ namespace MusicPlayer.ViewModels
             this.audioService.OnSongInfoChanged += (song) =>
             {
                 CurrentSong = song;
-                if (!CurrentSong.IsDragging)
+                if (CurrentSong != null && !CurrentSong.IsDragging)
                 {
                     ProgressBarPosition = CurrentSong.Position;
                 }
@@ -39,6 +39,16 @@ namespace MusicPlayer.ViewModels
 
         }
 
+        public event Action<bool>? PlayListVisibilityChanged;
+        private bool isPlayListVisible;
+
+        [RelayCommand]
+        private void TogglePlayList()
+        {
+            isPlayListVisible = !isPlayListVisible;
+            PlayListVisibilityChanged?.Invoke(isPlayListVisible);
+        }
+
         [ObservableProperty]
         private bool isPlaying;
 
@@ -49,7 +59,7 @@ namespace MusicPlayer.ViewModels
             {
                 case RowDoubleClickedModeEnum.ReplaceCurrentPlayList:
                     audioService.Stop();
-                    Task.Run(() => audioService.Play());
+                    audioService.Play();
                     break;
                 case RowDoubleClickedModeEnum.AddToPlayList:
                     break;
@@ -82,9 +92,9 @@ namespace MusicPlayer.ViewModels
             audioService.PlayPrev();
         }
 
-        public void SetPosition()
+        public void SetAudioFileCurrentTime()
         {
-            audioService.SetPositionAndPlay(ProgressBarPosition);
+            audioService.SetAudioFileCurrentTime(ProgressBarPosition);
         }
 
         [ObservableProperty]

@@ -34,12 +34,12 @@
                 Mode="Standard">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                         <Button
                             md:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
                             Command="{Binding MovePrevCommand}"
@@ -68,7 +68,10 @@
                         FontWeight="Bold"
                         Text="WPF Music Player" />
 
-                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <StackPanel
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
                         <Button
                             md:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
                             Content="{md:PackIcon Kind=Theme,
@@ -108,59 +111,142 @@
                 </Grid>
             </md:ColorZone>
 
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.3*" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <d:Border Background="LightBlue" />
-
-                <ListBox
-                    x:Name="MenuBarListBox"
-                    VerticalAlignment="Top"
-                    ItemsSource="{Binding MenuItems}"
-                    SelectedIndex="0"
-                    Style="{StaticResource MaterialDesignNavigationPrimaryListBox}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding NavigateToViewCommand}" CommandParameter="{Binding ElementName=MenuBarListBox, Path=SelectedItem}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type models:MenuItem}">
-                            <StackPanel Margin="0,4" Orientation="Horizontal">
-                                <md:PackIcon
-                                    Width="20"
-                                    Height="20"
-                                    Kind="{Binding Icon}" />
+            <md:DrawerHost
+                Grid.Row="1"
+                IsRightDrawerOpen="{Binding IsPlayListVisible}"
+                RightDrawerCornerRadius="15">
+                <md:DrawerHost.RightDrawerContent>
+                    <DockPanel>
+                        <Border
+                            BorderBrush="#FF989898"
+                            BorderThickness="0,0,0,1"
+                            DockPanel.Dock="Top">
+                            <DockPanel Margin="12,2">
                                 <TextBlock
-                                    Margin="8,0,0,0"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Name}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    Text="播放列表" />
+                                <Button
+                                    HorizontalAlignment="Right"
+                                    BorderThickness="0"
+                                    Command="{Binding DeleteAllCommand}"
+                                    Content="清空"
+                                    Foreground="#FF333333"
+                                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+                            </DockPanel>
+                        </Border>
 
-                <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}">
-                    <ContentControl.Resources>
-                        <DataTemplate DataType="{x:Type vm:LocalMusicViewModel}">
-                            <views:LocalMusicView />
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
-                            <views:SettingsView />
-                        </DataTemplate>
-                    </ContentControl.Resources>
-                </ContentControl>
-            </Grid>
 
-            <d:Border
-                   Grid.Row="2"
-                   Height="50"
-                   Background="Red"
-                   Opacity="0.2" />
+                        <DataGrid
+                            Grid.Row="1"
+                            Width="450"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            HeadersVisibility="None"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding PlayList.Songs}"
+                            SelectedItem="{Binding SelectedItem}">
+                            <DataGrid.InputBindings>
+                                <!--  双击绑定  -->
+                                <MouseBinding Command="{Binding RowDoubleClickCommand}" Gesture="LeftDoubleClick" />
+                            </DataGrid.InputBindings>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Width="1.5*"
+                                    Binding="{Binding Title}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    Header="标题" />
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Artist}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    Header="作者" />
+                                <DataGridTextColumn
+                                    Width="0.5*"
+                                    Binding="{Binding Origin}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    Header="来源" />
+
+                                <DataGridTemplateColumn Width="auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button
+                                                Width="16"
+                                                Height="16"
+                                                Padding="0"
+                                                Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                CommandParameter="{Binding}"
+                                                Content="{md:PackIcon Kind=Close}"
+                                                Foreground="#FF333333"
+                                                Style="{StaticResource MaterialDesignFlatButton}" />
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+
+                            <DataGrid.CellStyle>
+                                <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                    </DockPanel>
+                </md:DrawerHost.RightDrawerContent>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <d:Border Background="LightBlue" />
+
+                    <ListBox
+                        x:Name="MenuBarListBox"
+                        VerticalAlignment="Top"
+                        ItemsSource="{Binding MenuItems}"
+                        SelectedIndex="0"
+                        Style="{StaticResource MaterialDesignNavigationPrimaryListBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding NavigateToViewCommand}" CommandParameter="{Binding ElementName=MenuBarListBox, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:MenuItem}">
+                                <StackPanel Margin="0,4" Orientation="Horizontal">
+                                    <md:PackIcon
+                                        Width="20"
+                                        Height="20"
+                                        Kind="{Binding Icon}" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="{x:Type vm:LocalMusicViewModel}">
+                                <views:LocalMusicView />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+                                <views:SettingsView />
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
+                </Grid>
+            </md:DrawerHost>
 
             <Grid Grid.Row="2">
                 <ContentControl Content="{Binding PlayerViewModel}">

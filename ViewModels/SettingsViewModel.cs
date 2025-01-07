@@ -13,10 +13,10 @@ namespace MusicPlayer.ViewModels
             get => exitMode;
             set
             {
-                if (exitMode == value) return;
-
-                SetProperty(ref exitMode, value);
-                App.Current.Settings.ExitMode = value;
+                if (SetProperty(ref exitMode, value))
+                {
+                    App.Current.Settings.ExitMode = value;
+                };
             }
         }
 
@@ -25,10 +25,10 @@ namespace MusicPlayer.ViewModels
             get => playMode;
             set
             {
-                if (playMode == value) return;
-
-                SetProperty(ref playMode, value);
-                App.Current.Settings.PlayMode = value;
+                if (SetProperty(ref playMode, value))
+                {
+                    App.Current.Settings.PlayMode = value;
+                };
             }
         }
 
@@ -37,10 +37,10 @@ namespace MusicPlayer.ViewModels
             get => rowDoubleClickedMode;
             set
             {
-                if (rowDoubleClickedMode == value) return;
-
-                SetProperty(ref rowDoubleClickedMode, value);
-                App.Current.Settings.RowDoubleClickedMode = value;
+                if (SetProperty(ref rowDoubleClickedMode, value))
+                {
+                    App.Current.Settings.RowDoubleClickedMode = value;
+                };
             }
         }
     }

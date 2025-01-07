@@ -3,7 +3,7 @@
   "ExitMode": 0,
   "RowDoubleClickedMode": 0,
   "PlayList": {
-    "CurrentIdx": 15,
+    "CurrentIdx": 23,
     "Songs": [
       {
         "Position": "00:00:02",
@@ -50,7 +50,7 @@
         "IsDragging": false
       },
       {
-        "Position": "00:00:05",
+        "Position": "00:00:00",
         "Id": 4,
         "Title": "kuwo",
         "Artist": "kuwo",
@@ -83,7 +83,7 @@
         "IsDragging": false
       },
       {
-        "Position": "00:00:07",
+        "Position": "00:00:00",
         "Id": 7,
         "Title": "壁上观",
         "Artist": "一棵小葱",
@@ -116,7 +116,7 @@
         "IsDragging": false
       },
       {
-        "Position": "00:00:03",
+        "Position": "00:00:00",
         "Id": 10,
         "Title": "循迹",
         "Artist": "Jakub狗子哥",
@@ -171,7 +171,7 @@
         "IsDragging": false
       },
       {
-        "Position": "00:00:12",
+        "Position": "00:00:00",
         "Id": 15,
         "Title": "kuwo",
         "Artist": "kuwo",
@@ -193,7 +193,7 @@
         "IsDragging": false
       },
       {
-        "Position": "00:00:03",
+        "Position": "00:00:00",
         "Id": 17,
         "Title": "kuwo",
         "Artist": "kuwo",
@@ -204,7 +204,7 @@
         "IsDragging": false
       },
       {
-        "Position": "00:00:02",
+        "Position": "00:00:00",
         "Id": 18,
         "Title": null,
         "Artist": null,
@@ -259,7 +259,7 @@
         "IsDragging": false
       },
       {
-        "Position": "00:00:00",
+        "Position": "00:02:17",
         "Id": 23,
         "Title": "kuwo",
         "Artist": "kuwo",

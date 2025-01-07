@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock
-            FontSize="20"
+            FontSize="18"
             FontWeight="Bold"
             Text="本地音乐" />
 
@@ -43,12 +43,10 @@
             CanUserAddRows="False"
             IsReadOnly="True"
             ItemsSource="{Binding Songs}"
-            SelectedIndex="{Binding SelectedIndex}"
             SelectedItem="{Binding SelectedItem}">
             <DataGrid.InputBindings>
-                <!-- 双击绑定 -->
-                <MouseBinding Gesture="LeftDoubleClick"
-                      Command="{Binding RowDoubleClickCommand}" />
+                <!--  双击绑定  -->
+                <MouseBinding Command="{Binding RowDoubleClickCommand}" Gesture="LeftDoubleClick" />
             </DataGrid.InputBindings>
 
             <DataGrid.Columns>
@@ -91,6 +89,12 @@
                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                     Header="来源" />
             </DataGrid.Columns>
+
+            <DataGrid.CellStyle>
+                <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </DataGrid.CellStyle>
         </DataGrid>
     </Grid>
 </UserControl>
