@@ -3,8 +3,317 @@
   "WindowExitMode": 0,
   "PlaylistAddMode": 0,
   "Playlist": {
-    "Index": -1,
-    "Songs": []
+    "Index": 0,
+    "Songs": [
+      {
+        "Id": 0,
+        "Title": "【盗墓笔记】见闻山海",
+        "Artist": "李常超（Lao乾妈）",
+        "Album": "盗墓笔记·见闻山海",
+        "CurrentTime": "00:00:08.7000000",
+        "Duration": "00:04:47.7264000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\【盗墓笔记】见闻山海-李常超（Lao乾妈）, 音频怪物, 小魂, 徐远书.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 1,
+        "Title": "三国恋",
+        "Artist": "Tank",
+        "Album": "Fighting！生存之道",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:04:06.1737414",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\三国恋-Tank.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 2,
+        "Title": null,
+        "Artist": null,
+        "Album": null,
+        "CurrentTime": "00:00:00",
+        "Duration": "00:02:43.2816000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\不问别离-指尖笑.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 3,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:02:26.1997278",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\与天齐-倪浩毅.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 4,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:27.3309977",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\人间惊鸿宴-指尖笑.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 5,
+        "Title": "仙瑶",
+        "Artist": "叶里",
+        "Album": "仙瑶",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:03.1698000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\仙瑶 (DJ名龙版)-叶里.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 6,
+        "Title": "刺客诀",
+        "Artist": "Tank",
+        "Album": "刺客诀",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:04:03.6296458",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\刺客诀-Tank.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 7,
+        "Title": "壁上观",
+        "Artist": "一棵小葱",
+        "Album": "壁上观",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:04:44",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\壁上观-一棵小葱, 张曦匀.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 8,
+        "Title": "壁上观",
+        "Artist": "邓寓君(等什么君)",
+        "Album": "壁上观",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:04:12.8479791",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\壁上观-邓寓君(等什么君).flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 9,
+        "Title": null,
+        "Artist": null,
+        "Album": null,
+        "CurrentTime": "00:00:00",
+        "Duration": "00:02:11.9616000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\天地似无情-Y-D, 来一碗老于.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 10,
+        "Title": "循迹",
+        "Artist": "Jakub狗子哥",
+        "Album": "循迹 (琵琶版)",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:14.4711000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\循迹 (琵琶版)-Jakub狗子哥.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 11,
+        "Title": "循迹",
+        "Artist": "王子健",
+        "Album": "循迹",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:17.1750000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\循迹-王子健.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 12,
+        "Title": "星月落",
+        "Artist": "浮生梦",
+        "Album": "星月落",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:18.5192063",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\星月落-浮生梦.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 13,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:04:13.1684126",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\春不晚（with 冰洁）-郑浩, 冰洁.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 14,
+        "Title": "晚夜微雨问海棠",
+        "Artist": "镜予歌",
+        "Album": "晚夜微雨问海棠",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:04:43.0545000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\晚夜微雨问海棠-镜予歌, 喧笑, 陈亦洺.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 15,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:15.1447392",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\木偶戏-玥夏.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 16,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:51.5958276",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\江南烟雨色-杨树人.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 17,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:34.2219274",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\江湖之间-曹雨航, 朝歌夜弦.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 18,
+        "Title": null,
+        "Artist": null,
+        "Album": null,
+        "CurrentTime": "00:00:00",
+        "Duration": "00:02:01.0257000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\燕无歇 (feat.是七叔呢)-七叔（叶泽浩）, DJ黑桃A.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 19,
+        "Title": null,
+        "Artist": null,
+        "Album": null,
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:56.6487000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\牵丝戏 (DJ亚明版)-不只中二.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 20,
+        "Title": null,
+        "Artist": null,
+        "Album": null,
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:59.3631000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\牵丝戏-银临, Aki阿杰.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 21,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:04:37.3509523",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\盗墓笔记·十年人间-李常超（Lao乾妈）.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 22,
+        "Title": "离人赋",
+        "Artist": "云汐",
+        "Album": "离人赋",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:56.7009000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\离人赋-云汐.mp3",
+        "IsDragging": false
+      },
+      {
+        "Id": 23,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:27.2552607",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\耍把戏-阿禹ayy.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 24,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:03:04.5000000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\落 (花开花落日升日没)-唐伯虎Annie.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 25,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:02:35.7869160",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\赐我-一只白羊.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 26,
+        "Title": "kuwo",
+        "Artist": "kuwo",
+        "Album": "kuwo",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:05:13.5200000",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\逍遥叹-胡歌.flac",
+        "IsDragging": false
+      },
+      {
+        "Id": 27,
+        "Title": "风吹丹顶鹤",
+        "Artist": "葛东琪",
+        "Album": "第二街区",
+        "CurrentTime": "00:00:00",
+        "Duration": "00:05:04.3137188",
+        "Source": 0,
+        "Path": "C:\\Users\\wengym\\Music\\MusicFreeData\\风吹丹顶鹤-葛东琪.flac",
+        "IsDragging": false
+      }
+    ]
   },
   "Volume": 0.25
 }
