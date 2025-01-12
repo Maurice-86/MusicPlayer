@@ -7,7 +7,7 @@ namespace MusicPlayer.Helps
     {
         public static Playlist? _playlist;
 
-        public static void UpdatePlaylist(Playlist playlist)
+        public static void UpdatePlaylist(Playlist? playlist)
         {
             _playlist = playlist;
         }
