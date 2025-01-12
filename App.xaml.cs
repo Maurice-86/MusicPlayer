@@ -29,7 +29,7 @@ namespace MusicPlayer
             Services = container.BuildServiceProvider();
 
             Settings = SettingsHelp.LoadSettings();
-            PlaylistHelp.UpdatePlaylist(Settings?.Playlist);
+            PlaylistHelp.UpdatePlaylist(Settings.Playlist);
         }
 
         protected override void OnStartup(StartupEventArgs e)

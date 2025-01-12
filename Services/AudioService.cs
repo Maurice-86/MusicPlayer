@@ -40,7 +40,7 @@ namespace MusicPlayer.Services
 
             Stop();     // Pause 或不处理会触发 outputDevice Init 异常
 
-            audioFile?.Close();
+            audioFile?.Dispose();
             audioFile = new AudioFileReader(song.Path);
 
             if (isUpdateCurrentTime)
@@ -108,7 +108,7 @@ namespace MusicPlayer.Services
         public void Dispose()
         {
             outputDevice?.Dispose();
-            audioFile?.Close();
+            audioFile?.Dispose();
             timer?.Dispose();
         }
 
