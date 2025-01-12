@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MusicPlayer.Enum;
+using MusicPlayer.Enums;
 using MusicPlayer.Helps;
 using MusicPlayer.Models;
 using MusicPlayer.Services;
@@ -17,15 +17,15 @@ namespace MusicPlayer.ViewModels
         {
             this.audioService = audioService;
 
-            CurrentSong = PlayListHelp.GetCurrentSong();
-            ProgressBarPosition = CurrentSong == null ? TimeSpan.Zero : CurrentSong.Position;
+            CurrentSong = PlaylistHelp.GetCurrentSong();
+            ProgressBarPosition = CurrentSong?.CurrentTime ??TimeSpan.Zero;
 
             this.audioService.OnSongInfoChanged += (song) =>
             {
                 CurrentSong = song;
                 if (CurrentSong != null && !CurrentSong.IsDragging)
                 {
-                    ProgressBarPosition = CurrentSong.Position;
+                    ProgressBarPosition = CurrentSong.CurrentTime;
                 }
             };
 
@@ -39,14 +39,14 @@ namespace MusicPlayer.ViewModels
 
         }
 
-        public event Action<bool>? PlayListVisibilityChanged;
-        private bool isPlayListVisible;
+        public event Action<bool>? PlaylistVisibilityChanged;
+        private bool isPlaylistVisible;
 
         [RelayCommand]
-        private void TogglePlayList()
+        private void TogglePlaylist()
         {
-            isPlayListVisible = !isPlayListVisible;
-            PlayListVisibilityChanged?.Invoke(isPlayListVisible);
+            isPlaylistVisible = !isPlaylistVisible;
+            PlaylistVisibilityChanged?.Invoke(isPlaylistVisible);
         }
 
         [ObservableProperty]
@@ -55,13 +55,12 @@ namespace MusicPlayer.ViewModels
         // 事件处理方法
         private void OnLocalMusicRowDoubleClicked()
         {
-            switch (App.Current.Settings.RowDoubleClickedMode)
+            switch (App.Current.Settings.PlaylistAddMode)
             {
-                case RowDoubleClickedModeEnum.ReplaceCurrentPlayList:
-                    audioService.Stop();
-                    audioService.Play();
+                case PlaylistAddMode.Replace:
+                    audioService.Play(PlaybackOperation.Play);
                     break;
-                case RowDoubleClickedModeEnum.AddToPlayList:
+                case PlaylistAddMode.Append:
                     break;
             }
         }
@@ -72,7 +71,7 @@ namespace MusicPlayer.ViewModels
             switch (action)
             {
                 case "Play":
-                    audioService.Play();
+                    audioService.Play(PlaybackOperation.Play, isUpdateCurrentTime: true);
                     break;
                 case "Pause":
                     audioService.Pause();
@@ -83,18 +82,18 @@ namespace MusicPlayer.ViewModels
         [RelayCommand]
         private void StepForward()
         {
-            audioService.PlayNext();
+            audioService.Play(PlaybackOperation.PlayNext);
         }
 
         [RelayCommand]
         private void StepBackward()
         {
-            audioService.PlayPrev();
+            audioService.Play(PlaybackOperation.PlayPrevious);
         }
 
-        public void SetAudioFileCurrentTime()
+        public void UpdateAudioFileCurrentTime()
         {
-            audioService.SetAudioFileCurrentTime(ProgressBarPosition);
+            audioService.UpdateAudioFileCurrentTime(ProgressBarPosition);
         }
 
         [ObservableProperty]
@@ -114,7 +113,7 @@ namespace MusicPlayer.ViewModels
                 if (SetProperty(ref volumeInt, value))
                 {
                     volume = value / 100.0f;
-                    audioService.SetVolume(volume);
+                    audioService.UpdateVolume(volume);
                 }
             }
         }

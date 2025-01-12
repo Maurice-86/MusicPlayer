@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MusicPlayer.Enums;
 using MusicPlayer.Helps;
 using MusicPlayer.Models;
 using MusicPlayer.Services;
@@ -33,10 +34,10 @@ namespace MusicPlayer.ViewModels
             this.audioService = audioService;
 
             PlayerViewModel = playerViewModel;
-            playerViewModel.PlayListVisibilityChanged += (isVisible) =>
+            playerViewModel.PlaylistVisibilityChanged += (isVisible) =>
             {
-                IsPlayListVisible = isVisible;
-                PlayList = PlayListHelp.GetPlayList();
+                IsPlaylistVisible = isVisible;
+                Playlist = PlaylistHelp.GetPlaylist();
             };
         }
 
@@ -48,35 +49,33 @@ namespace MusicPlayer.ViewModels
         {
             if (SelectedItem == null) return;
 
-            audioService.PlayById(SelectedItem.Id);
+            audioService.Play(PlaybackOperation.PlayById, id: SelectedItem.Id);
         }
 
         [RelayCommand]
-        private void Delete(Song song)
+        private void Remove(Song? song)
         {
-            var curSong = PlayListHelp.GetCurrentSong();
-            if (curSong != null && curSong.Id == song.Id)
+            if (song == null)
             {
-                PlayListHelp.SetCurrentIdx(id: -1);
                 audioService.Stop();
+                PlaylistHelp.ClearPlaylist();
             }
-            PlayListHelp.DeleteSong(song.Id);
-            PlayList = PlayListHelp.GetPlayList();
-        }
-
-        [RelayCommand]
-        private void DeleteAll()
-        {
-            PlayListHelp.ClearPlayList();
-            audioService.Stop();
-            PlayList = PlayListHelp.GetPlayList();
+            else
+            {
+                if (PlaylistHelp.RemoveSong(song.Id))
+                {
+                    PlaylistHelp.UpdateIndex(PlaybackOperation.PlayRemove);
+                    audioService.Stop();
+                }
+            }
+            Playlist = PlaylistHelp.GetPlaylist();
         }
 
         [ObservableProperty]
-        private bool isPlayListVisible;
+        private bool isPlaylistVisible;
 
         [ObservableProperty]
-        private PlayList? playList;
+        private Playlist? playlist;
 
         [ObservableProperty]
         private ViewModelBase? currentViewModel;

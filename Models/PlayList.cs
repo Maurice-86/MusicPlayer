@@ -2,9 +2,9 @@
 
 namespace MusicPlayer.Models
 {
-    public class PlayList
+    public class Playlist
     {
-        public int CurrentIdx { get; set; } = -1;
-        public ObservableCollection<Song>? Songs { get; set; } = [];
+        public int Index { get; set; } = -1;
+        public ObservableCollection<Song>? Songs { get; set; }
     }
 }

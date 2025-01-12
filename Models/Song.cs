@@ -1,4 +1,4 @@
-﻿using MusicPlayer.Enum;
+﻿using MusicPlayer.Enums;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -6,26 +6,27 @@ namespace MusicPlayer.Models
 {
     public class Song : INotifyPropertyChanged
     {
-        private TimeSpan position;
-        public TimeSpan Position
+        public int Id { get; set; }
+        public string? Title { get; set; }
+        public string? Artist { get; set; }
+        public string? Album { get; set; }
+
+        private TimeSpan currentTime;
+        public TimeSpan CurrentTime
         {
-            get => position;
+            get => currentTime;
             set
             {
-                if (position != value)
+                if (currentTime != value)
                 {
-                    position = value;
+                    currentTime = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        public int Id { get; set; }
-        public string? Title { get; set; }
-        public string? Artist { get; set; }
-        public string? Album { get; set; }
         public TimeSpan Duration { get; set; }
-        public OriginEnum Origin { get; set; }
+        public AudioSource Source { get; set; }
         public string? Path { get; set; }
 
         /// <summary>

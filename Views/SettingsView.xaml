@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:convs="clr-namespace:MusicPlayer.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enum="clr-namespace:MusicPlayer.Enum"
+    xmlns:enums="clr-namespace:MusicPlayer.Enums"
     xmlns:local="clr-namespace:MusicPlayer.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
@@ -36,21 +36,21 @@
 
             <Label Content="单击退出按钮时" />
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="退出应用" IsChecked="{Binding ExitMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enum:ExitModeEnum.Close}}" />
-                <CheckBox Content="最小化到托盘" IsChecked="{Binding ExitMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enum:ExitModeEnum.Minimize}}" />
+                <CheckBox Content="退出应用" IsChecked="{Binding WindowExitMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:WindowExitMode.Close}}" />
+                <CheckBox Content="最小化到托盘" IsChecked="{Binding WindowExitMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:WindowExitMode.Minimize}}" />
             </StackPanel>
 
             <Label Content="播放方式" />
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="顺序播放" IsChecked="{Binding PlayMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enum:PlayModeEnum.Loop}}" />
-                <CheckBox Content="随机播放" IsChecked="{Binding PlayMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enum:PlayModeEnum.Random}}" />
-                <CheckBox Content="单曲循环" IsChecked="{Binding PlayMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enum:PlayModeEnum.Single}}" />
+                <CheckBox Content="顺序播放" IsChecked="{Binding PlayMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:PlayMode.Loop}}" />
+                <CheckBox Content="随机播放" IsChecked="{Binding PlayMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:PlayMode.Random}}" />
+                <CheckBox Content="单曲循环" IsChecked="{Binding PlayMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:PlayMode.Single}}" />
             </StackPanel>
 
             <Label Content="双击音乐列表时" />
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="将目标单曲添加到播放队列" IsChecked="{Binding RowDoubleClickedMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enum:RowDoubleClickedModeEnum.AddToPlayList}}" />
-                <CheckBox Content="使用当前音乐列表替换播放队列" IsChecked="{Binding RowDoubleClickedMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enum:RowDoubleClickedModeEnum.ReplaceCurrentPlayList}}" />
+                <CheckBox Content="将目标单曲添加到播放队列" IsChecked="{Binding PlaylistAddMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:PlaylistAddMode.Append}}" />
+                <CheckBox Content="使用当前音乐列表替换播放队列" IsChecked="{Binding PlaylistAddMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:PlaylistAddMode.Replace}}" />
             </StackPanel>
         </UniformGrid>
     </Grid>

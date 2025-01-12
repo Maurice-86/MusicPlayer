@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MusicPlayer.Enum;
+using MusicPlayer.Enums;
 using MusicPlayer.Helps;
 using MusicPlayer.Models;
 using System.Collections.ObjectModel;
@@ -30,24 +30,27 @@ namespace MusicPlayer.ViewModels
 
             Songs.Clear();
 
-            int idx = 0;
+            int id = 0;
             foreach (var file in files)
             {
                 var audio = TagLib.File.Create(file);
 
                 var Song = new Song
                 {
-                    Id = idx++,
+                    Id = id++,
                     Title = audio.Tag.Title,
                     Artist = audio.Tag.FirstPerformer,
                     Album = audio.Tag.Album,
                     Duration = audio.Properties.Duration,
-                    Origin = OriginEnum.Local,
+                    Source = AudioSource.Local,
                     Path = file
                 };
                 Songs.Add(Song);
             }
         }
+
+        [ObservableProperty]
+        private int selectedIndex;
 
         [ObservableProperty]
         private Song? selectedItem;
@@ -60,17 +63,17 @@ namespace MusicPlayer.ViewModels
         {
             if (SelectedItem == null) return;
 
-            switch (App.Current.Settings.RowDoubleClickedMode)
+            switch (App.Current.Settings.PlaylistAddMode)
             {
-                case RowDoubleClickedModeEnum.ReplaceCurrentPlayList:
-                    PlayListHelp.SetPlayList(new PlayList
+                case PlaylistAddMode.Replace:
+                    PlaylistHelp.UpdatePlaylist(new Playlist
                     {
-                        CurrentIdx = SelectedItem.Id,
+                        Index = SelectedIndex,
                         Songs = [.. Songs]
                     });
                     break;
-                case RowDoubleClickedModeEnum.AddToPlayList:
-                    PlayListHelp.AddSong(SelectedItem);
+                case PlaylistAddMode.Append:
+                    PlaylistHelp.AddSong(SelectedItem);
                     break;
             }
 

@@ -39,15 +39,30 @@
 
         <DataGrid
             Grid.Row="2"
+            AlternationCount="2"
             AutoGenerateColumns="False"
             CanUserAddRows="False"
             IsReadOnly="True"
             ItemsSource="{Binding Songs}"
+            SelectedIndex="{Binding SelectedIndex}"
             SelectedItem="{Binding SelectedItem}">
+            <!-- AlternationCount="2": 启用行交替索引 -->
             <DataGrid.InputBindings>
                 <!--  双击绑定  -->
                 <MouseBinding Command="{Binding RowDoubleClickCommand}" Gesture="LeftDoubleClick" />
             </DataGrid.InputBindings>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <Trigger Property="AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="#FFF0F0F0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FFF0F0F0" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
 
             <DataGrid.Columns>
                 <DataGridTextColumn
@@ -84,7 +99,7 @@
                     Header="时长" />
                 <DataGridTextColumn
                     Width="*"
-                    Binding="{Binding Origin}"
+                    Binding="{Binding Source}"
                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                     Header="来源" />

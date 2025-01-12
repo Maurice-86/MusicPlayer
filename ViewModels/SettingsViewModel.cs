@@ -1,26 +1,26 @@
-﻿using MusicPlayer.Enum;
+﻿using MusicPlayer.Enums;
 
 namespace MusicPlayer.ViewModels
 {
     public partial class SettingsViewModel : ViewModelBase
     {
-        private ExitModeEnum exitMode = App.Current.Settings.ExitMode;
-        private PlayModeEnum playMode = App.Current.Settings.PlayMode;
-        private RowDoubleClickedModeEnum rowDoubleClickedMode = App.Current.Settings.RowDoubleClickedMode;
+        private WindowExitMode windowExitMode = App.Current.Settings.WindowExitMode;
+        private PlayMode playMode = App.Current.Settings.PlayMode;
+        private PlaylistAddMode playlistAddMode = App.Current.Settings.PlaylistAddMode;
 
-        public ExitModeEnum ExitMode
+        public WindowExitMode WindowExitMode
         {
-            get => exitMode;
+            get => windowExitMode;
             set
             {
-                if (SetProperty(ref exitMode, value))
+                if (SetProperty(ref windowExitMode, value))
                 {
-                    App.Current.Settings.ExitMode = value;
+                    App.Current.Settings.WindowExitMode = value;
                 };
             }
         }
 
-        public PlayModeEnum PlayMode
+        public PlayMode PlayMode
         {
             get => playMode;
             set
@@ -32,14 +32,14 @@ namespace MusicPlayer.ViewModels
             }
         }
 
-        public RowDoubleClickedModeEnum RowDoubleClickedMode
+        public PlaylistAddMode PlaylistAddMode
         {
-            get => rowDoubleClickedMode;
+            get => playlistAddMode;
             set
             {
-                if (SetProperty(ref rowDoubleClickedMode, value))
+                if (SetProperty(ref playlistAddMode, value))
                 {
-                    App.Current.Settings.RowDoubleClickedMode = value;
+                    App.Current.Settings.PlaylistAddMode = value;
                 };
             }
         }

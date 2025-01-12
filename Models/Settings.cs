@@ -1,13 +1,13 @@
-﻿using MusicPlayer.Enum;
+﻿using MusicPlayer.Enums;
 
 namespace MusicPlayer.Models
 {
     public class Settings
     {
-        public PlayModeEnum PlayMode { get; set; }
-        public ExitModeEnum ExitMode { get; set; }
-        public RowDoubleClickedModeEnum RowDoubleClickedMode { get; set; }
-        public PlayList? PlayList { get; set; }
+        public PlayMode PlayMode { get; set; }
+        public WindowExitMode WindowExitMode { get; set; }
+        public PlaylistAddMode PlaylistAddMode { get; set; }
+        public Playlist? Playlist { get; set; }
         public float Volume { get; set; } = 0.25f;
     }
 }

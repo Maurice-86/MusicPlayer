@@ -1,4 +1,4 @@
-﻿using MusicPlayer.Enum;
+﻿using MusicPlayer.Enums;
 using System.Windows;
 
 namespace MusicPlayer
@@ -19,12 +19,12 @@ namespace MusicPlayer
 
             ExitButton.Click += (s, e) =>
             {
-                switch (App.Current.Settings.ExitMode)
+                switch (App.Current.Settings.WindowExitMode)
                 {
-                    case ExitModeEnum.Minimize:
+                    case WindowExitMode.Minimize:
                         this.WindowState = WindowState.Minimized;
                         break;
-                    case ExitModeEnum.Close:
+                    case WindowExitMode.Close:
                         this.Close();
                         break;
                 }
