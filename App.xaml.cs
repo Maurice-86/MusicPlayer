@@ -28,8 +28,8 @@ namespace MusicPlayer
             container.AddSingleton<PlayerViewModel>();
             Services = container.BuildServiceProvider();
 
-            Settings = SettingsHelp.LoadSettings();
-            PlaylistHelp.UpdatePlaylist(Settings.Playlist);
+            Settings = SettingsHelper.LoadSettings();
+            PlaylistHelper.UpdatePlaylist(Settings.Playlist);
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -48,8 +48,8 @@ namespace MusicPlayer
 
             var audioService = Services.GetRequiredService<AudioService>();
             audioService.Dispose();
-            Settings!.Playlist = PlaylistHelp.GetPlaylist();
-            SettingsHelp.SaveSettings(Settings);
+            Settings!.Playlist = PlaylistHelper.GetPlaylist();
+            SettingsHelper.SaveSettings(Settings);
         }
     }
 

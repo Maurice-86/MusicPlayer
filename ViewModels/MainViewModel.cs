@@ -37,7 +37,7 @@ namespace MusicPlayer.ViewModels
             playerViewModel.PlaylistVisibilityChanged += (isVisible) =>
             {
                 IsPlaylistVisible = isVisible;
-                Playlist = PlaylistHelp.GetPlaylist();
+                Playlist = PlaylistHelper.GetPlaylist();
             };
         }
 
@@ -58,17 +58,17 @@ namespace MusicPlayer.ViewModels
             if (song == null)
             {
                 audioService.Stop();
-                PlaylistHelp.ClearPlaylist();
+                PlaylistHelper.ClearPlaylist();
             }
             else
             {
-                if (PlaylistHelp.RemoveSong(song.Id))
+                if (PlaylistHelper.RemoveSong(song.Id))
                 {
-                    PlaylistHelp.UpdateIndex(PlaybackOperation.PlayRemove);
+                    PlaylistHelper.UpdateIndex(PlaybackOperation.PlayRemove);
                     audioService.Stop();
                 }
             }
-            Playlist = PlaylistHelp.GetPlaylist();
+            Playlist = PlaylistHelper.GetPlaylist();
         }
 
         [ObservableProperty]

@@ -17,7 +17,7 @@ namespace MusicPlayer.ViewModels
         {
             this.audioService = audioService;
 
-            CurrentSong = PlaylistHelp.GetCurrentSong();
+            CurrentSong = PlaylistHelper.GetCurrentSong();
             ProgressBarPosition = CurrentSong?.CurrentTime ??TimeSpan.Zero;
 
             this.audioService.OnSongInfoChanged += (song) =>

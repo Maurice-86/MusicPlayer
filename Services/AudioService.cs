@@ -28,14 +28,14 @@ namespace MusicPlayer.Services
                     }
                     break;
                 default:
-                    PlaylistHelp.UpdateCurrentSongTime(TimeSpan.Zero);
+                    PlaylistHelper.UpdateCurrentSongTime(TimeSpan.Zero);
                     break;
             }
-            PlaylistHelp.UpdateIndex(operation, id);
+            PlaylistHelper.UpdateIndex(operation, id);
 
             // TODO: 有些歌即使指定了位置但还是从头开始播放
 
-            var song = PlaylistHelp.GetCurrentSong();
+            var song = PlaylistHelper.GetCurrentSong();
             if (song == null) return;
 
             Stop();     // Pause 或不处理会触发 outputDevice Init 异常
@@ -88,7 +88,7 @@ namespace MusicPlayer.Services
 
         public void UpdateAudioFileCurrentTime(TimeSpan time)
         {
-            var song = PlaylistHelp.GetCurrentSong();
+            var song = PlaylistHelper.GetCurrentSong();
             if (song == null) return;
 
             song.CurrentTime = time;
@@ -114,7 +114,7 @@ namespace MusicPlayer.Services
 
         private void UpdateSongInfo(object? state)
         {
-            var song = PlaylistHelp.GetCurrentSong();
+            var song = PlaylistHelper.GetCurrentSong();
             if (song != null)
             {
                 var diff = song.CurrentTime.TotalMilliseconds - song.Duration.TotalMilliseconds;

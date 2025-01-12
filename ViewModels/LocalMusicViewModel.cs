@@ -66,14 +66,14 @@ namespace MusicPlayer.ViewModels
             switch (App.Current.Settings.PlaylistAddMode)
             {
                 case PlaylistAddMode.Replace:
-                    PlaylistHelp.UpdatePlaylist(new Playlist
+                    PlaylistHelper.UpdatePlaylist(new Playlist
                     {
                         Index = SelectedIndex,
                         Songs = [.. Songs]
                     });
                     break;
                 case PlaylistAddMode.Append:
-                    PlaylistHelp.AddSong(SelectedItem);
+                    PlaylistHelper.AddSong(SelectedItem);
                     break;
             }
 
