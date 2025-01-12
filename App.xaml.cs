@@ -14,7 +14,7 @@ namespace MusicPlayer
     {
         public static new App Current => (App)Application.Current;
         public IServiceProvider Services { get; }
-        public Settings? Settings { get; set; }
+        public Settings Settings { get; set; } = new Settings();
 
         public App()
         {
