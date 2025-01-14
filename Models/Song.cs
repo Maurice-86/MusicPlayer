@@ -1,4 +1,4 @@
-﻿using MusicPlayer.Enums;
+﻿using MusicPlayer.Enum;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 

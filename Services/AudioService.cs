@@ -1,4 +1,4 @@
-﻿using MusicPlayer.Enums;
+﻿using MusicPlayer.Enum;
 using MusicPlayer.Helps;
 using MusicPlayer.Models;
 using NAudio.Wave;

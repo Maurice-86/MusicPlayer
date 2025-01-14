@@ -1,4 +1,4 @@
-﻿using MusicPlayer.Enums;
+﻿using MusicPlayer.Enum;
 
 namespace MusicPlayer.ViewModels
 {

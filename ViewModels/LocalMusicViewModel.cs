@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MusicPlayer.Enums;
+using MusicPlayer.Enum;
 using MusicPlayer.Helps;
 using MusicPlayer.Models;
 using System.Collections.ObjectModel;

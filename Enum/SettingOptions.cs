@@ -1,4 +1,4 @@
-﻿namespace MusicPlayer.Enums
+﻿namespace MusicPlayer.Enum
 {
     public enum PlayMode
     {
