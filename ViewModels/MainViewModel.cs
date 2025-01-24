@@ -77,6 +77,9 @@ namespace MusicPlayer.ViewModels
         private bool isPlaying;
 
         [ObservableProperty]
+        private PlaybackMode playbackMode;
+
+        [ObservableProperty]
         private ObservableCollection<Song> songs;
 
         [ObservableProperty]
@@ -117,6 +120,24 @@ namespace MusicPlayer.ViewModels
         private void StepForward()
         {
             _audioPlayer.Play(PlaybackOperation.Next);
+        }
+
+        [RelayCommand]
+        private void SwitchPlaybackMode()
+        {
+            switch (PlaybackMode)
+            {
+                case PlaybackMode.Ordered:
+                    PlaybackMode = PlaybackMode.Random;
+                    break;
+                case PlaybackMode.Random:
+                    PlaybackMode = PlaybackMode.Single;
+                    break;
+                case PlaybackMode.Single:
+                    PlaybackMode = PlaybackMode.Ordered;
+                    break;   
+            }
+            _playlistService.PlaybackMode = PlaybackMode;
         }
 
         /// <summary>

@@ -11,7 +11,10 @@ namespace MusicPlayer.Models
     {
         public int Index { get; set; }
         public float Volume { get; set; }
-        public PlaybackOperation Operation { get; set; }
+        /// <summary>
+        /// 播放模式
+        /// </summary>
+        public PlaybackMode PlaybackMode { get; set; } 
         public List<Song> Songs { get; set; } = [];
     }
 }

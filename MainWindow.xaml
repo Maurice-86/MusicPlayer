@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:convs="clr-namespace:MusicPlayer.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="clr-namespace:MusicPlayer.Enum"
     xmlns:local="clr-namespace:MusicPlayer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -194,7 +195,6 @@
                             Foreground="White"
                             Style="{StaticResource MaterialDesignFloatingActionButton}"
                             Visibility="{Binding IsPlaying, Converter={convs:BooleanToVisibilityConverter IsReversed=True}}" />
-
                         <Button
                             Grid.Column="3"
                             Command="{Binding StepForwardCommand}"
@@ -204,9 +204,28 @@
                         <Button
                             Grid.Column="4"
                             HorizontalAlignment="Right"
+                            Command="{Binding SwitchPlaybackModeCommand}"
+                            Content="{md:PackIcon Kind=ArrowRight,
+                                                  Size=18}"
+                            Style="{StaticResource GlobalButton}"
+                            Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Ordered}}" />
+                        <Button
+                            Grid.Column="4"
+                            HorizontalAlignment="Right"
+                            Command="{Binding SwitchPlaybackModeCommand}"
                             Content="{md:PackIcon Kind=Shuffle,
                                                   Size=18}"
-                            Style="{StaticResource GlobalButton}" />
+                            Style="{StaticResource GlobalButton}"
+                            Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Random}}" />
+                        <Button
+                            Grid.Column="4"
+                            HorizontalAlignment="Right"
+                            Command="{Binding SwitchPlaybackModeCommand}"
+                            Content="{md:PackIcon Kind=Repeat,
+                                                  Size=18}"
+                            Cursor="Hand"
+                            Style="{StaticResource GlobalButton}"
+                            Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Single}}" />
                     </Grid>
                     <StackPanel
                         Grid.Row="3"

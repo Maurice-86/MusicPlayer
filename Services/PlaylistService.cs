@@ -41,7 +41,7 @@ namespace MusicPlayer.Services
                 }
                 Index = playlist.Index;
                 Volume = playlist.Volume;
-                Operation = playlist.Operation;
+                PlaybackMode = playlist.PlaybackMode;
                 Songs = [.. playlist.Songs];
             }
         }
@@ -55,7 +55,7 @@ namespace MusicPlayer.Services
             {
                 Index = Index,
                 Volume = Volume,
-                Operation = Operation,
+                PlaybackMode = PlaybackMode,
                 Songs = [.. Songs]
             };
             JsonUtils<Playlist>.SaveInfoToJson(playlist, Constants.FileConstants.PlaylistFilePath);
@@ -73,7 +73,7 @@ namespace MusicPlayer.Services
             }
         }
         public float Volume { get; set; }
-        public PlaybackOperation Operation { get; set; }
+        public PlaybackMode PlaybackMode { get; set; }
         public ObservableCollection<Song> Songs { get; set; } = [];
         public event Action? OnIndexChanged;
 
@@ -151,15 +151,18 @@ namespace MusicPlayer.Services
                 Index = id;
                 return;
             }
-            else if (operation == PlaybackOperation.Previous)
+            // 防止除以0
+            if (Songs.Count == 0) return;   
+
+            if (operation == PlaybackOperation.Previous)
                 Index = (index - 1 + Songs.Count) % Songs.Count;
             else if (operation == PlaybackOperation.Next)
                 Index = (index + 1) % Songs.Count;
             else if (operation == PlaybackOperation.Auto)
             {
-                if (Operation == PlaybackOperation.Ordered)
+                if (PlaybackMode == PlaybackMode.Ordered)
                     Index = (index + 1) % Songs.Count;
-                else if (Operation == PlaybackOperation.Random)
+                else if (PlaybackMode == PlaybackMode.Random)
                 {
                     // 计算总权重
                     double totalWeight = Songs.Sum(song => CalculateWeight(song.PlayCount));
