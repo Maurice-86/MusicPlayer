@@ -15,12 +15,6 @@ namespace MusicPlayer.Converters
         {
             var boolValue = value.ToString() == parameter.ToString();
             return boolValue ^ IsReversed ? Visibility.Visible : (UseHidden ? Visibility.Hidden : Visibility.Collapsed);
-            //return Binding.DoNothing;
         }
-
-        // public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        // {
-        //     return parameter;
-        // }
     }
 }
