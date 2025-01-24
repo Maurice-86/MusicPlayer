@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace MusicPlayer.Converters
 {
-    public class SecondsToTimeSpan : BaseValueConverter<SecondsToTimeSpan>
+    public class SecondsToTimeSpan : BaseValueConverter
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

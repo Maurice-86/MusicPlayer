@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace MusicPlayer.Converters
 {
-    public class BooleanToVisibilityConverter : BaseValueConverter<BooleanToVisibilityConverter>
+    public class BooleanToVisibilityConverter : BaseValueConverter
     {
         public bool IsReversed { get; set; }
         public bool UseHidden { get; set; }

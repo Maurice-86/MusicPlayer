@@ -9,10 +9,8 @@ using System.Windows.Markup;
 
 namespace MusicPlayer.Converters
 {
-    public abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter
-        where T : class, new()
+    public abstract class BaseValueConverter : MarkupExtension, IValueConverter
     {
-        public static T Instance { get; } = new();
         public abstract object Convert(object value, Type targetType, object parameter, CultureInfo culture);
 
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

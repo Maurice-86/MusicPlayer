@@ -22,8 +22,9 @@ namespace MusicPlayer.Converters
                 int index = (int)values[1];
                 return id == index ? App.Current.Resources["PrimaryColor"] : App.Current.Resources["NeutralForeground"];
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"IndexToColorConverter 发生异常，异常原因:{ex.Message}");
                 return Binding.DoNothing;
             }
         }
