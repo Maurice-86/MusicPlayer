@@ -22,6 +22,7 @@ namespace MusicPlayer.ViewModels
             _audioPlayer = audioPlayer;
             Index = _playlistService.Index;
             volume = playlistService.Volume;
+            PlaybackMode = playlistService.PlaybackMode;
             Songs = _playlistService.Songs;
             if (Index < Songs.Count) Song = Songs[Index];
             if (Song != null) SliderValue = Song.Position.TotalSeconds;
@@ -135,7 +136,7 @@ namespace MusicPlayer.ViewModels
                     break;
                 case PlaybackMode.Single:
                     PlaybackMode = PlaybackMode.Ordered;
-                    break;   
+                    break;
             }
             _playlistService.PlaybackMode = PlaybackMode;
         }
