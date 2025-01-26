@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
+using MusicPlayer.Helpers;
 using MusicPlayer.Services;
 using MusicPlayer.ViewModels;
 
@@ -14,46 +15,56 @@ namespace MusicPlayer.Dialogs
 {
     public partial class SettingsDialogViewModel : ViewModelBase
     {
-        private readonly SettingsService _settingsService;
         public SettingsDialogViewModel()
         {
-            _settingsService = App.Current.Services.GetRequiredService<SettingsService>();
-            ThemeNumber = _settingsService.Model.ThemeNumber;
-            LanguageNumber = _settingsService.Model.LanguageNumber;
+            IsDarkTheme = SettingsService.Instance.Model.ThemeMode == Enum.ThemeMode.Dark;
+            LanguageModeIndex = (int)SettingsService.Instance.Model.LanguageMode;
         }
 
-        [ObservableProperty]
-        private int themeNumber = -1;
+        private bool isDarkTheme;
+        public bool IsDarkTheme
+        {
+            get => isDarkTheme;
+            set
+            {
+                isDarkTheme = value;
+                ThemeContent = value ? "深色" : "浅色";
+                OnPropertyChanged(nameof(IsDarkTheme));
+            }
+        }
 
         [ObservableProperty]
         private string? themeContent;
 
-        partial void OnThemeNumberChanged(int value)
+        private int languageModeIndex;
+        public int LanguageModeIndex
         {
-            ThemeContent = value == 0 ? "深色" : "浅色";
+            get => languageModeIndex;
+            set
+            {
+                languageModeIndex = value;
+                LanguageContent = value == (int)Enum.LanguageMode.Chinese ? "中文" : "英文";
+                OnPropertyChanged(nameof(LanguageModeIndex));
+            }
         }
-
-        [ObservableProperty]
-        private int languageNumber = -1;
 
         [ObservableProperty]
         private string? languageContent;
 
-        partial void OnLanguageNumberChanged(int value)
-        {
-            LanguageContent = value == 0 ? "中文" : "英文";
-        }
-
         [RelayCommand]
         private void Save()
         {
-            if (_settingsService.Model.ThemeNumber != ThemeNumber)
+            if (IsDarkTheme != 
+                (SettingsService.Instance.Model.ThemeMode == Enum.ThemeMode.Dark))
             {
-                _settingsService.Model.ThemeNumber = ThemeNumber;
-                App.Current.SwitchTheme(ThemeNumber == 0);
+                SettingsService.Instance.Model.ThemeMode = IsDarkTheme ? Enum.ThemeMode.Dark : Enum.ThemeMode.Light;
+                ThemeHelper.SwitchTheme(IsDarkTheme);
             }
-            
-            _settingsService.Model.LanguageNumber = LanguageNumber;
+            if (LanguageModeIndex != (int)SettingsService.Instance.Model.LanguageMode)
+            {
+                SettingsService.Instance.Model.LanguageMode = (Enum.LanguageMode)LanguageModeIndex;
+                // TODO
+            }
         }
     }
 }
