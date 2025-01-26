@@ -159,7 +159,7 @@ namespace MusicPlayer
                 double targetHeight = this.Height - DrawerHost.ActualHeight;
                 while (this.Height > targetHeight)
                 {
-                    this.Height -= Math.Min(10, this.Height - targetHeight); // 每次减少1
+                    this.Height -= Math.Min(20, this.Height - targetHeight); // 每次减少20
                 }
             }
             else
@@ -167,7 +167,7 @@ namespace MusicPlayer
                 double targetHeight = originalWindowHeight;
                 while (this.Height < targetHeight)
                 {
-                    this.Height += Math.Min(10, targetHeight - this.Height); // 每次增加1
+                    this.Height += Math.Min(20, targetHeight - this.Height); // 每次增加20
                 }
             }
         }
