@@ -8,7 +8,7 @@ namespace MusicPlayer.Models
 {
     public class Settings
     {
-        public int ThemeNumber { get; set; }
-        public int LanguageNumber { get; set; }
+        public Enum.ThemeMode ThemeMode { get; set; }
+        public Enum.LanguageMode LanguageMode { get; set; }
     }
 }

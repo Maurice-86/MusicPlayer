@@ -10,9 +10,10 @@ namespace MusicPlayer.Services
 {
     public class SettingsService
     {
+        public static SettingsService Instance { get; } = new();
         public Settings Model;
 
-        public SettingsService()
+        private SettingsService()
         {
             Model = JsonUtils<Settings>.ReadInfoFromJson(Constants.FileConstants.SettingsFilePath) ?? new Settings();
         }
