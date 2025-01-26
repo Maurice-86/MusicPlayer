@@ -1,109 +1,79 @@
-﻿<Window
-    x:Class="MusicPlayer.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:convs="clr-namespace:MusicPlayer.Converters"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enum="clr-namespace:MusicPlayer.Enum"
-    xmlns:local="clr-namespace:MusicPlayer"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:models="clr-namespace:MusicPlayer.Models"
-    Title="MainWindow"
-    Width="450"
-    Height="650"
-    MinWidth="450"
-    MinHeight="270"
-    MaxWidth="450"
-    d:Background="#FF323232"
-    AllowsTransparency="True"
-    ResizeMode="CanResizeWithGrip"
-    Style="{StaticResource MaterialDesignWindow}"
-    WindowStartupLocation="CenterScreen"
-    WindowStyle="None"
-    mc:Ignorable="d">
-    <md:DialogHost
-        CloseOnClickAway="True"
-        DialogTheme="Inherit"
-        Identifier="RootDialog"
-        SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+﻿<Window x:Class="MusicPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:convs="clr-namespace:MusicPlayer.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:enum="clr-namespace:MusicPlayer.Enum"
+        xmlns:local="clr-namespace:MusicPlayer"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:models="clr-namespace:MusicPlayer.Models"
+        xmlns:services="clr-namespace:MusicPlayer.Services"
+        Title="MainWindow"
+        Width="450"
+        Height="650"
+        MinWidth="450"
+        MinHeight="270"
+        MaxWidth="450"
+        d:Background="#FF323232"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        Style="{StaticResource MaterialDesignWindow}"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        mc:Ignorable="d">
+    <md:DialogHost CloseOnClickAway="True" DialogTheme="Inherit" Identifier="RootDialog">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="220" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <!--  标题栏  -->
-            <md:ColorZone
-                Padding="10"
-                Background="IndianRed"
-                MouseMove="ColorZone_MouseMove">
+            <!-- 标题栏 -->
+            <md:ColorZone Padding="10" Background="IndianRed" MouseMove="ColorZone_MouseMove">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Margin="12,0"
-                        VerticalAlignment="Center"
-                        FontSize="22"
-                        FontWeight="Bold"
-                        Text="音乐播放器" />
-                    <StackPanel
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                        <Button
-                            Click="OpenSettingsDialogButton_Click"
-                            Content="{md:PackIcon Kind=Settings,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}" />
-                        <Button
-                            Click="MinimizeButton_Click"
-                            Content="{md:PackIcon Kind=Minimize,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}" />
-                        <Button
-                            Click="MaximizeButton_Click"
-                            Content="{md:PackIcon Kind=Maximize,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}" />
-                        <Button
-                            Click="CloseButton_Click"
-                            Content="{md:PackIcon Kind=Close,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}" />
+                    <TextBlock Margin="12,0"
+                               VerticalAlignment="Center"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Text="音乐播放器" />
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button Click="OpenSettingsDialogButton_Click" Content="{md:PackIcon Kind=Settings, Size=18}" Style="{StaticResource GlobalButton}" />
+                        <Button Click="MinimizeButton_Click" Content="{md:PackIcon Kind=Minimize, Size=18}" Style="{StaticResource GlobalButton}" />
+                        <Button Click="MaximizeButton_Click" Content="{md:PackIcon Kind=Maximize, Size=18}" Style="{StaticResource GlobalButton}" />
+                        <Button Click="CloseButton_Click" Content="{md:PackIcon Kind=Close, Size=18}" Style="{StaticResource GlobalButton}" />
                     </StackPanel>
                 </Grid>
             </md:ColorZone>
 
-            <!--  主要部分  -->
+            <!-- 消息显示 -->
+            <md:Snackbar Grid.Row="1"
+                         VerticalAlignment="Top"
+                         Panel.ZIndex="1"
+                         IsActive="{Binding Source={x:Static services:MessageService.Instance}, Path=MessageActive}"
+                         MessageQueue="{Binding Source={x:Static services:MessageService.Instance}, Path=MessageQueue}" />
+
+            <!-- 主要部分 -->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.7*" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <!--  封面图  -->
-                <Image
-                    Width="150"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Source="/Images/XQAtch3m5m.png">
+                <!-- 封面图 -->
+                <Image Width="150"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Source="/Images/XQAtch3m5m.png">
                     <Image.Clip>
-                        <EllipseGeometry
-                            Center="75 75"
-                            RadiusX="75"
-                            RadiusY="75" />
+                        <EllipseGeometry Center="75 75" RadiusX="75" RadiusY="75" />
                     </Image.Clip>
-                    <!--<Image.RenderTransform>
-                        <ScaleTransform ScaleX="0.85" ScaleY="0.85" />
-                    </Image.RenderTransform>-->
                 </Image>
-                <!--  歌曲播放界面  -->
-                <Grid
-                    Grid.Column="1"
-                    Margin="10,10,10,0"
-                    Cursor="">
+                <!-- 歌曲播放界面 -->
+                <Grid Grid.Column="1" Margin="10,10,10,0" Cursor="">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition />
@@ -111,33 +81,29 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <StackPanel>
-                        <Button
-                            HorizontalAlignment="Right"
-                            Click="OpenFileDialogButton_Click"
-                            Content="{md:PackIcon Kind=PlaylistAdd,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}" />
-                        <TextBlock
-                            Margin="0,0,0,6"
-                            HorizontalAlignment="Left"
-                            FontSize="16"
-                            Text="{Binding Song.Title}"
-                            TextTrimming="WordEllipsis" />
-                        <TextBlock
-                            Margin="2,0"
-                            HorizontalAlignment="Left"
-                            Text="{Binding Song.Artist}"
-                            TextTrimming="WordEllipsis" />
+                        <Button HorizontalAlignment="Right"
+                                Click="OpenFileDialogButton_Click"
+                                Content="{md:PackIcon Kind=PlaylistAdd,
+                                                      Size=18}"
+                                Style="{StaticResource GlobalButton}" />
+                        <TextBlock Margin="0,0,0,6"
+                                   HorizontalAlignment="Left"
+                                   FontSize="16"
+                                   Text="{Binding Song.Title}"
+                                   TextTrimming="WordEllipsis" />
+                        <TextBlock Margin="2,0"
+                                   HorizontalAlignment="Left"
+                                   Text="{Binding Song.Artist}"
+                                   TextTrimming="WordEllipsis" />
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" VerticalAlignment="Center">
-                        <Slider
-                            Maximum="{Binding Song.Duration, Converter={convs:TimeSpanToSeconds}}"
-                            Minimum="0"
-                            MouseLeftButtonUp="Slider_MouseLeftButtonUp"
-                            Thumb.DragCompleted="Slider_DragCompleted"
-                            Thumb.DragStarted="Slider_DragStarted"
-                            Value="{Binding SliderValue}" />
+                        <Slider Maximum="{Binding Song.Duration, Converter={convs:TimeSpanToSeconds}}"
+                                Minimum="0"
+                                MouseLeftButtonUp="Slider_MouseLeftButtonUp"
+                                Thumb.DragCompleted="Slider_DragCompleted"
+                                Thumb.DragStarted="Slider_DragStarted"
+                                Value="{Binding SliderValue}" />
                         <DockPanel Margin="0,4,0,0">
                             <TextBlock HorizontalAlignment="Left" Text="{Binding SliderValue, Converter={convs:SecondsToTimeSpan}}" />
                             <TextBlock HorizontalAlignment="Right" Text="{Binding Song.Duration, StringFormat={}{0:mm\\:ss}}" />
@@ -151,156 +117,131 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <md:PopupBox PlacementMode="BottomAndAlignCentres" ToggleContent="{md:PackIcon Kind=VolumeHigh, Size=18}">
+
+                        <md:PopupBox HorizontalAlignment="Center" PlacementMode="BottomAndAlignCentres">
+                            <md:PopupBox.ToggleContent>
+                                <md:PackIcon Width="18"
+                                             Height="18"
+                                             Kind="VolumeHigh"
+                                             Foreground="{DynamicResource WhiteForeground}" />
+                            </md:PopupBox.ToggleContent>
                             <StackPanel>
-                                <Slider
-                                    Height="80"
-                                    Margin="10"
-                                    Maximum="100"
-                                    Minimum="0"
-                                    Orientation="Vertical"
-                                    Value="{Binding VolumeInt}" />
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Bottom"
-                                    Text="{Binding VolumeInt}" />
+                                <Slider Height="80"
+                                        Margin="10"
+                                        Maximum="100"
+                                        Minimum="0"
+                                        Orientation="Vertical"
+                                        Value="{Binding VolumeInt}" />
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding VolumeInt}" />
                             </StackPanel>
                         </md:PopupBox>
-                        <Button
-                            Grid.Column="1"
-                            Command="{Binding StepBackwardCommand}"
-                            Content="{md:PackIcon Kind=StepBackward,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}" />
-                        <Button
-                            Grid.Column="2"
-                            Width="48"
-                            Height="48"
-                            d:Visibility="Collapsed"
-                            Command="{Binding ExcuteCommand}"
-                            CommandParameter="Pause"
-                            Content="{md:PackIcon Kind=Pause,
-                                                  Size=18}"
-                            Foreground="White"
-                            Style="{StaticResource MaterialDesignFloatingActionButton}"
-                            Visibility="{Binding IsPlaying, Converter={convs:BooleanToVisibilityConverter}}" />
-                        <Button
-                            Grid.Column="2"
-                            Width="48"
-                            Height="48"
-                            Command="{Binding ExcuteCommand}"
-                            CommandParameter="Play"
-                            Content="{md:PackIcon Kind=Play,
-                                                  Size=18}"
-                            Foreground="White"
-                            Style="{StaticResource MaterialDesignFloatingActionButton}"
-                            Visibility="{Binding IsPlaying, Converter={convs:BooleanToVisibilityConverter IsReversed=True}}" />
-                        <Button
-                            Grid.Column="3"
-                            Command="{Binding StepForwardCommand}"
-                            Content="{md:PackIcon Kind=StepForward,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}" />
-                        <Button
-                            Grid.Column="4"
-                            HorizontalAlignment="Right"
-                            Command="{Binding SwitchPlaybackModeCommand}"
-                            Content="{md:PackIcon Kind=ArrowRight,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}"
-                            Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Ordered}}" />
-                        <Button
-                            Grid.Column="4"
-                            HorizontalAlignment="Right"
-                            Command="{Binding SwitchPlaybackModeCommand}"
-                            Content="{md:PackIcon Kind=Shuffle,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}"
-                            Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Random}}" />
-                        <Button
-                            Grid.Column="4"
-                            HorizontalAlignment="Right"
-                            Command="{Binding SwitchPlaybackModeCommand}"
-                            Content="{md:PackIcon Kind=Repeat,
-                                                  Size=18}"
-                            Cursor="Hand"
-                            Style="{StaticResource GlobalButton}"
-                            Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Single}}" />
+                        <Button Grid.Column="1"
+                                Command="{Binding StepBackwardCommand}"
+                                Content="{md:PackIcon Kind=StepBackward,
+                                                      Size=18}"
+                                Style="{StaticResource GlobalButton}" />
+                        <Button Grid.Column="2"
+                                Width="48"
+                                Height="48"
+                                d:Visibility="Collapsed"
+                                Command="{Binding ExcuteCommand}"
+                                CommandParameter="Pause"
+                                Content="{md:PackIcon Kind=Pause,
+                                                      Size=18}"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                Visibility="{Binding IsPlaying, Converter={convs:BooleanToVisibilityConverter}}" />
+                        <Button Grid.Column="2"
+                                Width="48"
+                                Height="48"
+                                Command="{Binding ExcuteCommand}"
+                                CommandParameter="Play"
+                                Content="{md:PackIcon Kind=Play,
+                                                      Size=18}"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                Visibility="{Binding IsPlaying, Converter={convs:BooleanToVisibilityConverter IsReversed=True}}" />
+                        <Button Grid.Column="3"
+                                Command="{Binding StepForwardCommand}"
+                                Content="{md:PackIcon Kind=StepForward,
+                                                      Size=18}"
+                                Style="{StaticResource GlobalButton}" />
+                        <Button Grid.Column="4"
+                                HorizontalAlignment="Right"
+                                Command="{Binding SwitchPlaybackModeCommand}"
+                                Content="{md:PackIcon Kind=ArrowRight,
+                                                      Size=18}"
+                                Style="{StaticResource GlobalButton}"
+                                Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Ordered}}" />
+                        <Button Grid.Column="4"
+                                HorizontalAlignment="Right"
+                                d:Visibility="Collapsed"
+                                Command="{Binding SwitchPlaybackModeCommand}"
+                                Content="{md:PackIcon Kind=Shuffle,
+                                                      Size=18}"
+                                Style="{StaticResource GlobalButton}"
+                                Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Random}}" />
+                        <Button Grid.Column="4"
+                                HorizontalAlignment="Right"
+                                d:Visibility="Collapsed"
+                                Command="{Binding SwitchPlaybackModeCommand}"
+                                Content="{md:PackIcon Kind=Repeat,
+                                                      Size=18}"
+                                Cursor="Hand"
+                                Style="{StaticResource GlobalButton}"
+                                Visibility="{Binding PlaybackMode, Converter={convs:EnumToVisibilityConverter}, ConverterParameter={x:Static enum:PlaybackMode.Single}}" />
                     </Grid>
-                    <StackPanel
-                        Grid.Row="3"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                        <ToggleButton
-                            Width="35"
-                            Height="25"
-                            Padding="16,4"
-                            Click="ToggleButton_Click"
-                            Foreground="White"
-                            Style="{StaticResource MaterialDesignExpanderToggleButton}" />
-                        <ToggleButton
-                            x:Name="HamburgerMenuButton"
-                            Width="50"
-                            Height="18"
-                            Padding="16,4"
-                            Checked="HamburgerMenuButton_Checked"
-                            Content="{md:PackIcon Kind=HamburgerMenu,
-                                                  Size=18}"
-                            Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
-
-                        <!--<Button
-                            Grid.Row="3"
-                            HorizontalAlignment="Right"
-                            Content="{md:PackIcon Kind=ArrowUp,
-                                                  Size=18}"
-                            Style="{StaticResource GlobalButton}" />-->
+                    <StackPanel Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <ToggleButton Width="35"
+                                      Height="25"
+                                      Padding="16,4"
+                                      Click="ToggleButton_Click"
+                                      Foreground="{DynamicResource WhiteForeground}"
+                                      Style="{StaticResource MaterialDesignExpanderToggleButton}" />
+                        <ToggleButton x:Name="HamburgerMenuButton"
+                                      Width="50"
+                                      Height="18"
+                                      Padding="16,4"
+                                      Checked="HamburgerMenuButton_Checked"
+                                      Content="{md:PackIcon Kind=HamburgerMenu,
+                                                            Size=18}"
+                                      Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
                     </StackPanel>
                 </Grid>
             </Grid>
 
-            <!--  歌词和播放列表部分  -->
-            <md:DrawerHost
-                x:Name="DrawerHost"
-                Grid.Row="2"
-                IsRightDrawerOpen="{Binding ElementName=HamburgerMenuButton, Path=IsChecked}"
-                OpenMode="Modal"
-                RightDrawerCornerRadius="20 0 0 20">
+            <!-- 歌词和播放列表部分 -->
+            <md:DrawerHost x:Name="DrawerHost"
+                           Grid.Row="2"
+                           Visibility="Collapsed"
+                           IsRightDrawerOpen="{Binding ElementName=HamburgerMenuButton, Path=IsChecked}"
+                           OpenMode="Modal"
+                           RightDrawerCornerRadius="20 0 0 20">
                 <md:DrawerHost.RightDrawerContent>
-                    <ListView
-                        x:Name="PlayListView"
-                        ItemsSource="{Binding Songs}"
-                        MouseDoubleClick="ListView_MouseDoubleClick"
-                        ScrollViewer.VerticalScrollBarVisibility="Visible"
-                        SelectedItem="{Binding SelectedItem}">
-                        <!--  设计时  -->
+                    <ListView x:Name="PlayListView"
+                              ItemsSource="{Binding Songs}"
+                              MouseDoubleClick="ListView_MouseDoubleClick"
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              SelectedItem="{Binding SelectedItem}">
+                        <!-- 设计时 -->
                         <d:ListView.ItemsSource>
                             <x:Array Type="{x:Type models:Song}">
-                                <models:Song
-                                    Title="我是歌名"
-                                    Artist="我是歌手"
-                                    Duration="05:00" />
-                                <models:Song
-                                    Title="我是歌名"
-                                    Artist="我是歌手"
-                                    Duration="05:00" />
-                                <models:Song
-                                    Title="我是歌名"
-                                    Artist="我是歌手"
-                                    Duration="05:00" />
+                                <models:Song Title="我是歌名" Artist="我是歌手" Duration="05:00" />
+                                <models:Song Title="我是歌名" Artist="我是歌手" Duration="05:00" />
+                                <models:Song Title="我是歌名" Artist="我是歌手" Duration="05:00" />
                             </x:Array>
                         </d:ListView.ItemsSource>
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <!--  id == index 设置 TextBlock 字体为红色，否则为白色  -->
+                                    <!-- id == index 设置 TextBlock 字体为红色，否则为白色 -->
                                     <GridViewColumn Width="100" Header="歌名">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Text="{Binding Title}"
-                                                    TextTrimming="CharacterEllipsis">
+                                                <TextBlock HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Text="{Binding Title}"
+                                                           TextTrimming="CharacterEllipsis">
                                                     <TextBlock.Foreground>
                                                         <MultiBinding Converter="{convs:IndexToColorConverter}">
                                                             <Binding Path="Id" />
@@ -314,11 +255,10 @@
                                     <GridViewColumn Width="80" Header="歌手">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Text="{Binding Artist}"
-                                                    TextTrimming="CharacterEllipsis">
+                                                <TextBlock HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Text="{Binding Artist}"
+                                                           TextTrimming="CharacterEllipsis">
                                                     <TextBlock.Foreground>
                                                         <MultiBinding Converter="{convs:IndexToColorConverter}">
                                                             <Binding Path="Id" />
@@ -332,10 +272,7 @@
                                     <GridViewColumn Header="时长">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Text="{Binding Duration, StringFormat={}{0:mm\\:ss}}">
+                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Duration, StringFormat={}{0:mm\\:ss}}">
                                                     <TextBlock.Foreground>
                                                         <MultiBinding Converter="{convs:IndexToColorConverter}">
                                                             <Binding Path="Id" />
@@ -348,7 +285,7 @@
                                     </GridViewColumn>
                                 </GridView.Columns>
                                 <GridView.ColumnHeaderContainerStyle>
-                                    <!--  设置列头不能左右拖动  -->
+                                    <!-- 设置列头不能左右拖动 -->
                                     <Style BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="{x:Type GridViewColumnHeader}">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </Style>
@@ -361,11 +298,10 @@
                     </ListView>
                 </md:DrawerHost.RightDrawerContent>
 
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="32"
-                    Text="我是歌词" />
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="32"
+                           Text="我是歌词" />
             </md:DrawerHost>
         </Grid>
     </md:DialogHost>
