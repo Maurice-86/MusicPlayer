@@ -82,6 +82,7 @@ namespace MusicPlayer.Services
         {
             soundOut?.Pause();
             timer?.Change(Timeout.Infinite, 0); // 停止定时器
+            Thread.Sleep(500); // 等待500ms，确保当前回调完成
             OnPlaybackStateChanged?.Invoke(PlaybackState.Paused);
         }
 
@@ -98,7 +99,8 @@ namespace MusicPlayer.Services
 
         private void Stop()
         {
-            timer?.Change(Timeout.Infinite, 0); // 先停止定时器
+            timer?.Change(Timeout.Infinite, 0); // 先停止定时器                    
+            Thread.Sleep(500); // 等待500ms，确保当前回调完成
             soundOut?.Stop();
             OnPlaybackStateChanged?.Invoke(PlaybackState.Stopped);
         }
@@ -133,7 +135,7 @@ namespace MusicPlayer.Services
             {
                 var diff = song.Position.TotalSeconds - song.Duration.TotalSeconds;
                 // 歌曲播放结束
-                if (diff > 0 || soundOut?.PlaybackState == PlaybackState.Stopped)
+                if (Math.Abs(diff) < 0.8)
                 {
                     song.PlayCount++;
                     Play(PlaybackOperation.Auto);
@@ -142,8 +144,7 @@ namespace MusicPlayer.Services
                 {
                     try
                     {
-                        if (waveSource != null)
-                            song.Position = waveSource.GetPosition();
+                        song.Position = waveSource?.GetPosition() ?? TimeSpan.Zero;
                     }
                     catch (NullReferenceException ex)
                     {

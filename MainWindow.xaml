@@ -54,7 +54,7 @@
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
                         <Button
-                            Click="Button_Click"
+                            Click="OpenSettingsDialogButton_Click"
                             Content="{md:PackIcon Kind=Settings,
                                                   Size=18}"
                             Style="{StaticResource GlobalButton}" />
@@ -243,6 +243,7 @@
                             Width="50"
                             Height="18"
                             Padding="16,4"
+                            Checked="HamburgerMenuButton_Checked"
                             Content="{md:PackIcon Kind=HamburgerMenu,
                                                   Size=18}"
                             Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
@@ -266,6 +267,7 @@
                 RightDrawerCornerRadius="20 0 0 20">
                 <md:DrawerHost.RightDrawerContent>
                     <ListView
+                        x:Name="PlayListView"
                         ItemsSource="{Binding Songs}"
                         MouseDoubleClick="ListView_MouseDoubleClick"
                         ScrollViewer.VerticalScrollBarVisibility="Visible"

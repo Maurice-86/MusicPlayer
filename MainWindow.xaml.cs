@@ -37,6 +37,10 @@ namespace MusicPlayer
 
         private SettingsDialog? settingsDialog;
 
+        /// <summary>
+        /// 渲染窗口尺寸变化
+        /// </summary>
+        /// <param name="sizeInfo"></param>
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
             base.OnRenderSizeChanged(sizeInfo);
@@ -48,7 +52,12 @@ namespace MusicPlayer
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 打开设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenSettingsDialogButton_Click(object sender, RoutedEventArgs e)
         {
             var identifier = "RootDialog";
             settingsDialog = new SettingsDialog(dialogIdentifier: identifier)
@@ -113,7 +122,7 @@ namespace MusicPlayer
         private void OpenFileDialogButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "音频文件 (*.mp3;*.wav)|*.mp3;*.wav"; // 只允许选择音频文件
+            openFileDialog.Filter = "音频文件 (*.mp3;*.wav;*.flac)|*.mp3;*.wav;*.flac"; // 只允许选择音频文件
             openFileDialog.Multiselect = true; // 允许选择多个文件
             if (openFileDialog.ShowDialog() != true) return;
 
@@ -206,6 +215,20 @@ namespace MusicPlayer
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             _viewModel.RowDoubleClick();
+        }
+
+        /// <summary>
+        /// 当汉堡菜单按钮被选中时，滚动播放列表以显示当前播放的歌曲。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HamburgerMenuButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleButton { IsChecked: true } && _viewModel?.Song != null)
+            {
+                var item = PlayListView.Items[_viewModel.Song.Id];
+                PlayListView.ScrollIntoView(item);
+            }
         }
     }
 }
