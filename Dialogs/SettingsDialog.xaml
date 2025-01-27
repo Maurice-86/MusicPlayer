@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MusicPlayer.Dialogs"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             lex:ResxLocalizationProvider.DefaultAssembly="MusicPlayer"
+             lex:ResxLocalizationProvider.DefaultDictionary="Lang"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -17,34 +20,37 @@
             <TextBlock Margin="0,0,0,2"
                        FontSize="20"
                        FontWeight="Bold"
-                       Text="主题" />
+                       Text="{lex:Loc SettingsDialog_ThemeTextBlock_Content}" />
             <StackPanel Orientation="Horizontal">
-                <Label VerticalAlignment="Center" Content="{Binding ThemeContent}" />
-                <ToggleButton IsChecked="{Binding IsDarkTheme}" />
+                <Label VerticalAlignment="Center" d:Content="深色" Content="{Binding ThemeContent}" />
+                <ToggleButton d:IsChecked="True" IsChecked="{Binding IsDarkTheme}" />
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1">
             <TextBlock Margin="0,0,0,2"
                        FontSize="20"
                        FontWeight="Bold"
-                       Text="语言" />
+                       Text="{lex:Loc SettingsDialog_LanguageTextBlock_Content}" />
             <StackPanel Orientation="Horizontal">
-                <Label VerticalAlignment="Center" Content="{Binding LanguageContent}" />
-                <ComboBox SelectedIndex="{Binding LanguageModeIndex}">
-                    <ComboBoxItem>中文</ComboBoxItem>
-                    <ComboBoxItem>英文</ComboBoxItem>
+                <Label VerticalAlignment="Center" d:Content="中文" Content="{Binding LanguageContent}" />
+                <ComboBox d:SelectedIndex="0" SelectedIndex="{Binding LanguageModeIndex}">
+                    <ComboBoxItem Content="{lex:Loc SettingsDialog_ChineseLanguageLabel_Content}" />
+                    <ComboBoxItem Content="{lex:Loc SettingsDialog_EnglishLanguageLabel_Content}" />
                 </ComboBox>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Margin="0,0,10,0"
+            <Button Width="80"
+                    Margin="0,0,10,0"
+                    Click="CloseDialog_Click"
+                    Tag="Close"
+                    Foreground="{DynamicResource WhiteForeground}"
+                    Content="{lex:Loc SettingsDialog_CancelButton_Content}" />
+            <Button Width="80"
+                    Tag="Save"
                     Click="CloseDialog_Click"
                     Foreground="{DynamicResource WhiteForeground}"
-                    Content="取消" />
-            <Button Click="CloseDialog_Click"
-                    Command="{Binding SaveCommand}"
-                    Foreground="{DynamicResource WhiteForeground}"
-                    Content="保存" />
+                    Content="{lex:Loc SettingsDialog_SaveButton_Content}" />
         </StackPanel>
     </Grid>
 </UserControl>

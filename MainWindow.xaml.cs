@@ -15,6 +15,7 @@ using Microsoft.Win32;
 using MusicPlayer.Dialogs;
 using MusicPlayer.Helpers;
 using MusicPlayer.Models;
+using MusicPlayer.Resources;
 using MusicPlayer.Services;
 using MusicPlayer.Utils;
 using MusicPlayer.ViewModels;
@@ -65,8 +66,7 @@ namespace MusicPlayer
                 Width = this.Width * Constants.WindowRatioConstants.SettingsDialogWidthRatio,
                 Height = this.Height * Constants.WindowRatioConstants.SettingsDialogHeightRatio,
                 MaxHeight = 300,
-                MinHeight = 200,
-                DataContext = new SettingsDialogViewModel()
+                MinHeight = 200
             };
             MaterialDesignThemes.Wpf.DialogHost.Show(settingsDialog, identifier);
         }
@@ -81,15 +81,15 @@ namespace MusicPlayer
             this.WindowState = WindowState.Minimized;
         }
 
-        /// <summary>
-        /// 最大化窗口
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            // this.WindowState = this.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-        }
+        // /// <summary>
+        // /// 最大化窗口
+        // /// </summary>
+        // /// <param name="sender"></param>
+        // /// <param name="e"></param>
+        // private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        // {
+        //     // this.WindowState = this.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
+        // }
 
         /// <summary>
         /// 关闭窗口
@@ -115,12 +115,13 @@ namespace MusicPlayer
         }
 
         /// <summary>
-        /// 打开文件选择器
+        /// 导入歌曲
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OpenFileDialogButton_Click(object sender, RoutedEventArgs e)
+        private void ImportSongsButton_Click(object sender, RoutedEventArgs e)
         {
+            // 打开文件选择器
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "音频文件 (*.mp3;*.wav;*.flac)|*.mp3;*.wav;*.flac"; // 只允许选择音频文件
             openFileDialog.Multiselect = true; // 允许选择多个文件
@@ -142,7 +143,8 @@ namespace MusicPlayer
             }
 
             var playlistService = App.Current.Services.GetRequiredService<PlaylistService>();
-            playlistService.Add(songs);
+            var count = playlistService.Add(songs);
+            MessageService.Instance.ShowMessage(string.Format(Lang.Snackbar_ImportSongsMessage, songs.Count, count));
         }
 
         private double originalWindowHeight;

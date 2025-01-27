@@ -6,6 +6,7 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using MusicPlayer.Extensions;
 using MusicPlayer.Helpers;
+using MusicPlayer.Resources;
 using MusicPlayer.Services;
 using MusicPlayer.ViewModels;
 
@@ -35,8 +36,9 @@ namespace MusicPlayer
             base.OnStartup(e);
             var mainWindow = Services.GetRequiredService<MainWindow>();
             ThemeHelper.SwitchTheme(SettingsService.Instance.Model.ThemeMode == Enum.ThemeMode.Dark);
+            LanguageHelper.SwitchLanguage(SettingsService.Instance.Model.LanguageMode);
             mainWindow.Show();
-            MessageService.Instance.ShowMessage("欢迎");
+            MessageService.Instance.ShowMessage(Lang.Snackbar_WelcomeMessage);
         }
 
         protected override void OnExit(ExitEventArgs e)

@@ -9,12 +9,15 @@
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:models="clr-namespace:MusicPlayer.Models"
         xmlns:services="clr-namespace:MusicPlayer.Services"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
         Title="MainWindow"
         Width="450"
         Height="650"
         MinWidth="450"
         MinHeight="270"
         MaxWidth="450"
+        lex:ResxLocalizationProvider.DefaultAssembly="MusicPlayer"
+        lex:ResxLocalizationProvider.DefaultDictionary="Lang"
         d:Background="#FF323232"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
@@ -40,12 +43,24 @@
                                VerticalAlignment="Center"
                                FontSize="22"
                                FontWeight="Bold"
-                               Text="音乐播放器" />
+                               Text="{lex:Loc MainWindow_WindowTitle}" />
                     <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                        <Button Click="OpenSettingsDialogButton_Click" Content="{md:PackIcon Kind=Settings, Size=18}" Style="{StaticResource GlobalButton}" />
-                        <Button Click="MinimizeButton_Click" Content="{md:PackIcon Kind=Minimize, Size=18}" Style="{StaticResource GlobalButton}" />
-                        <Button Click="MaximizeButton_Click" Content="{md:PackIcon Kind=Maximize, Size=18}" Style="{StaticResource GlobalButton}" />
-                        <Button Click="CloseButton_Click" Content="{md:PackIcon Kind=Close, Size=18}" Style="{StaticResource GlobalButton}" />
+                        <Button ToolTip="{lex:Loc MainWindow_SettingButton_ToolTip}"
+                                Click="OpenSettingsDialogButton_Click"
+                                Content="{md:PackIcon Kind=Settings,
+                                                      Size=18}"
+                                Style="{StaticResource GlobalButton}" />
+                        <Button ToolTip="{lex:Loc MainWindow_MinimizeButton_ToolTip}"
+                                Click="MinimizeButton_Click"
+                                Content="{md:PackIcon Kind=Minimize,
+                                                      Size=18}"
+                                Style="{StaticResource GlobalButton}" />
+                        <!--<Button Click="MaximizeButton_Click" Content="{md:PackIcon Kind=Maximize, Size=18}" Style="{StaticResource GlobalButton}" />-->
+                        <Button ToolTip="{lex:Loc MainWindow_CloseButton_ToolTip}"
+                                Click="CloseButton_Click"
+                                Content="{md:PackIcon Kind=Close,
+                                                      Size=18}"
+                                Style="{StaticResource GlobalButton}" />
                     </StackPanel>
                 </Grid>
             </md:ColorZone>
@@ -82,7 +97,8 @@
                     </Grid.RowDefinitions>
                     <StackPanel>
                         <Button HorizontalAlignment="Right"
-                                Click="OpenFileDialogButton_Click"
+                                ToolTip="{lex:Loc MainWindow_ImportSongsButton_ToolTip}"
+                                Click="ImportSongsButton_Click"
                                 Content="{md:PackIcon Kind=PlaylistAdd,
                                                       Size=18}"
                                 Style="{StaticResource GlobalButton}" />
@@ -118,7 +134,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <md:PopupBox HorizontalAlignment="Center" PlacementMode="BottomAndAlignCentres">
+                        <md:PopupBox HorizontalAlignment="Center" ToolTip="{lex:Loc MainWindow_VolumeButton_ToolTip}" PlacementMode="BottomAndAlignCentres">
                             <md:PopupBox.ToggleContent>
                                 <md:PackIcon Width="18"
                                              Height="18"
@@ -136,6 +152,7 @@
                             </StackPanel>
                         </md:PopupBox>
                         <Button Grid.Column="1"
+                                ToolTip="{lex:Loc MainWindow_StepBackwardButton_ToolTip}"
                                 Command="{Binding StepBackwardCommand}"
                                 Content="{md:PackIcon Kind=StepBackward,
                                                       Size=18}"
@@ -144,6 +161,7 @@
                                 Width="48"
                                 Height="48"
                                 d:Visibility="Collapsed"
+                                ToolTip="{lex:Loc MainWindow_PauseButton_ToolTip}"
                                 Command="{Binding ExcuteCommand}"
                                 CommandParameter="Pause"
                                 Content="{md:PackIcon Kind=Pause,
@@ -154,6 +172,7 @@
                         <Button Grid.Column="2"
                                 Width="48"
                                 Height="48"
+                                ToolTip="{lex:Loc MainWindow_PlayButton_ToolTip}"
                                 Command="{Binding ExcuteCommand}"
                                 CommandParameter="Play"
                                 Content="{md:PackIcon Kind=Play,
@@ -162,12 +181,14 @@
                                 Style="{StaticResource MaterialDesignFloatingActionButton}"
                                 Visibility="{Binding IsPlaying, Converter={convs:BooleanToVisibilityConverter IsReversed=True}}" />
                         <Button Grid.Column="3"
+                                ToolTip="{lex:Loc MainWindow_StepForwardButton_ToolTip}"
                                 Command="{Binding StepForwardCommand}"
                                 Content="{md:PackIcon Kind=StepForward,
                                                       Size=18}"
                                 Style="{StaticResource GlobalButton}" />
                         <Button Grid.Column="4"
                                 HorizontalAlignment="Right"
+                                ToolTip="{lex:Loc MainWindow_ArrowRightButton_ToolTip}"
                                 Command="{Binding SwitchPlaybackModeCommand}"
                                 Content="{md:PackIcon Kind=ArrowRight,
                                                       Size=18}"
@@ -176,6 +197,7 @@
                         <Button Grid.Column="4"
                                 HorizontalAlignment="Right"
                                 d:Visibility="Collapsed"
+                                ToolTip="{lex:Loc MainWindow_ShuffleButton_ToolTip}"
                                 Command="{Binding SwitchPlaybackModeCommand}"
                                 Content="{md:PackIcon Kind=Shuffle,
                                                       Size=18}"
@@ -184,6 +206,7 @@
                         <Button Grid.Column="4"
                                 HorizontalAlignment="Right"
                                 d:Visibility="Collapsed"
+                                ToolTip="{lex:Loc MainWindow_RepeatdButton_ToolTip}"
                                 Command="{Binding SwitchPlaybackModeCommand}"
                                 Content="{md:PackIcon Kind=Repeat,
                                                       Size=18}"
@@ -202,6 +225,7 @@
                                       Width="50"
                                       Height="18"
                                       Padding="16,4"
+                                      ToolTip="{lex:Loc MainWindow_HamburgerMenuButton_ToolTip}"
                                       Checked="HamburgerMenuButton_Checked"
                                       Content="{md:PackIcon Kind=HamburgerMenu,
                                                             Size=18}"
@@ -234,7 +258,7 @@
                             <GridView>
                                 <GridView.Columns>
                                     <!-- id == index 设置 TextBlock 字体为红色，否则为白色 -->
-                                    <GridViewColumn Width="100" Header="歌名">
+                                    <GridViewColumn Width="100" Header="{lex:Loc MainWindow_DrawerHost_SongTitle_Header}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock HorizontalAlignment="Center"
@@ -251,7 +275,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Width="80" Header="歌手">
+                                    <GridViewColumn Width="80" Header="{lex:Loc MainWindow_DrawerHost_Singer_Header}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock HorizontalAlignment="Center"
@@ -268,7 +292,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="时长">
+                                    <GridViewColumn Header="{lex:Loc MainWindow_DrawerHost_Duration_Header}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Duration, StringFormat={}{0:mm\\:ss}}">

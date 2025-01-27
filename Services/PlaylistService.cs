@@ -99,9 +99,10 @@ namespace MusicPlayer.Services
             Songs.Add(song);
         }
 
-        public void Add(IEnumerable<Song> songs)
+        public int Add(IEnumerable<Song> songs)
         {
             InitializeStrings(out HashSet<string> strings);
+            int count = 0;
             foreach (var song in songs)
             {
                 string key = song.Title + song.Artist + song.Duration.TotalSeconds;
@@ -110,7 +111,9 @@ namespace MusicPlayer.Services
                 song.Id = Songs.Count;
                 Songs.Add(song);
                 strings.Add(key);
+                count++;
             }
+            return count;
         }
 
         public bool Remove(int id)

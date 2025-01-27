@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using MusicPlayer.Helpers;
+using MusicPlayer.Resources;
 using MusicPlayer.Services;
 using MusicPlayer.ViewModels;
 
@@ -28,7 +29,7 @@ namespace MusicPlayer.Dialogs
             set
             {
                 isDarkTheme = value;
-                ThemeContent = value ? "深色" : "浅色";
+                ThemeContent = value ? Lang.SettingsDialog_DarkLabel_Content : Lang.SettingsDialog_LightLabel_Content;
                 OnPropertyChanged(nameof(IsDarkTheme));
             }
         }
@@ -43,7 +44,7 @@ namespace MusicPlayer.Dialogs
             set
             {
                 languageModeIndex = value;
-                LanguageContent = value == (int)Enum.LanguageMode.Chinese ? "中文" : "英文";
+                LanguageContent = value == (int)Enum.LanguageMode.Chinese ? Lang.SettingsDialog_ChineseLanguageLabel_Content : Lang.SettingsDialog_EnglishLanguageLabel_Content;
                 OnPropertyChanged(nameof(LanguageModeIndex));
             }
         }
@@ -51,19 +52,24 @@ namespace MusicPlayer.Dialogs
         [ObservableProperty]
         private string? languageContent;
 
-        [RelayCommand]
-        private void Save()
+        public void Save()
         {
             if (IsDarkTheme != 
                 (SettingsService.Instance.Model.ThemeMode == Enum.ThemeMode.Dark))
             {
                 SettingsService.Instance.Model.ThemeMode = IsDarkTheme ? Enum.ThemeMode.Dark : Enum.ThemeMode.Light;
+                // 切换主题
                 ThemeHelper.SwitchTheme(IsDarkTheme);
             }
             if (LanguageModeIndex != (int)SettingsService.Instance.Model.LanguageMode)
             {
                 SettingsService.Instance.Model.LanguageMode = (Enum.LanguageMode)LanguageModeIndex;
-                // TODO
+                // 切换语言
+                LanguageHelper.SwitchLanguage(SettingsService.Instance.Model.LanguageMode);
+
+                // 更新当前页面 ThemeContent 和 LanguageContent
+                ThemeContent = IsDarkTheme ? Lang.SettingsDialog_DarkLabel_Content : Lang.SettingsDialog_LightLabel_Content;
+                LanguageContent = LanguageModeIndex == (int)Enum.LanguageMode.Chinese ? Lang.SettingsDialog_ChineseLanguageLabel_Content : Lang.SettingsDialog_EnglishLanguageLabel_Content;
             }
         }
     }

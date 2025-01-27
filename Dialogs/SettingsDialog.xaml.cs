@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MusicPlayer.Resources;
+using MusicPlayer.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,10 +23,13 @@ namespace MusicPlayer.Dialogs
     public partial class SettingsDialog : UserControl
     {
         private readonly string _dialogIdentifier;
+        private readonly SettingsDialogViewModel _viewModel;
         public SettingsDialog(string dialogIdentifier = "RootDialog")
         {
             InitializeComponent();
             _dialogIdentifier = dialogIdentifier;
+            _viewModel = new();
+            this.DataContext = _viewModel;
         }
 
         /// <summary>
@@ -35,6 +40,12 @@ namespace MusicPlayer.Dialogs
         private void CloseDialog_Click(object sender, RoutedEventArgs e)
         {
             MaterialDesignThemes.Wpf.DialogHost.Close(_dialogIdentifier, null);
+            var tag = (sender as Button)?.Tag.ToString();
+            if (tag == "Save")
+            {
+                _viewModel.Save();
+                MessageService.Instance.ShowMessage(Lang.Snackbar_SettingsSaveMessage);
+            }
         }
     }
 }
