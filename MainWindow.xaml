@@ -64,12 +64,12 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <!-- 封面图 -->
-                <Image Width="150"
+                <Image Width="200"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Source="/Images/XQAtch3m5m.png">
+                       Source="/Resources/Images/dog.png">
                     <Image.Clip>
-                        <EllipseGeometry Center="75 75" RadiusX="75" RadiusY="75" />
+                        <EllipseGeometry Center="100 100" RadiusX="65" RadiusY="65" />
                     </Image.Clip>
                 </Image>
                 <!-- 歌曲播放界面 -->
@@ -213,7 +213,6 @@
             <!-- 歌词和播放列表部分 -->
             <md:DrawerHost x:Name="DrawerHost"
                            Grid.Row="2"
-                           Visibility="Collapsed"
                            IsRightDrawerOpen="{Binding ElementName=HamburgerMenuButton, Path=IsChecked}"
                            OpenMode="Modal"
                            RightDrawerCornerRadius="20 0 0 20">
